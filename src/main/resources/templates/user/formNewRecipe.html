@@ -21,7 +21,7 @@
 		</div>
 		<div>
 			<label for="testo">Testo:</label><textarea id="testo" rows="4" th:placeholder="Scrivi qui il testo" th:field="${recipe.text}"></textarea>
-			<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+			<span th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
 		</div>
 		<div>
 			<span><button type="submit">Conferma</button></span>
