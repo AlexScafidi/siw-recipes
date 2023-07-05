@@ -30,11 +30,11 @@ public class Ingredient {
 		this.id = id;
 	}
 
-	public String getTitle() {
+	public String getName() {
 		return name;
 	}
 
-	public void setTitle(String title) {
+	public void setName(String title) {
 		this.name = title;
 	}
 

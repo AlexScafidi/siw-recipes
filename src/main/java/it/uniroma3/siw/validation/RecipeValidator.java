@@ -13,7 +13,7 @@ public class RecipeValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return this.getClass().equals(clazz); 
+		return Recipe.class.equals(clazz); 
 	}
 
 	@Override

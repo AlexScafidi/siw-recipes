@@ -14,7 +14,9 @@ public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
 					+ " join ingredient_quantity qi on rqi.quantity_ingredients_id = qi.id \r\n"
 					+ " join ingredient ii on qi.ingredient_id = ii.id \r\n"
 					+ " where r.title = :recipe_title)   ")
-public Iterable<Ingredient> findAllIngredientsNotInRecipe(String recipe_title);
-	
+	public Iterable<Ingredient> findAllIngredientsNotInRecipe(String recipe_title);
+
+	public boolean existsByName(String title);
+
 
 }

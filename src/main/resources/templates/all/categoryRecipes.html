@@ -9,9 +9,9 @@
     <link name="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <header>
+	  <header th:insert="~{/fragments/fragments.html :: header}"></header>
+      
       <h1>siw reciper</h1>
-    </header>
     <div>
       <h1 th:text="'Tutte le ricette della categoria ' + ${category.name}"></h1>
     </div>

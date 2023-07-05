@@ -12,26 +12,7 @@
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<header>
-
-		<div>
-			<div th:if="${userDetails}">
-				<span id="logName" th:text="*{username}"></span>
-				<form th:action="@{/logout}">
-					<button class="button" type="submit" value="logout">Logout</button>
-				</form>
-			</div>
-			<div th:unless="${userDetails}">
-				<form th:action="@{/login}">
-					<button class="button" type="submit" value="login">Login</button>
-				</form>
-				<form th:action="@{/registration}">
-					<button class="button" type="submit" value="registration">Registration</button>
-				</form>
-			</div>
-		</div>
-
-	</header>
+	<header th:insert="~{/fragments/fragments.html :: header}"></header>
 	<div>
 		<h1>siw recipes</h1>
 		<h3>homepage</h3>

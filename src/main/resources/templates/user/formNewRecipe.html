@@ -10,6 +10,8 @@
   	</head>
   
   	<body>
+		  <header th:insert="~{/fragments/fragments.html :: header}"></header>
+		  
     	<h1>Aggiungi un </h1>
     	<form th:action="@{/user/newRecipe}" method="POST" th:object="${recipe}">
       	<div th:if="${#fields.hasGlobalErrors()}">

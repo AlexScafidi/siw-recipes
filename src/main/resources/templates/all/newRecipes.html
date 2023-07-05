@@ -9,15 +9,15 @@
     <link name="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <header>
+	  <header th:insert="~{/fragments/fragments.html :: header}"></header>
+	  
       <h1>siw recipes</h1>
-    </header>
     <div>
       <h1>nuove ricette</h1>
     </div>
     <div>
       <div th:if="${newRecipes.isEmpty()}">
-        <span>SPIACENTE...ma il catagolo non è stato aggiornato</span>
+        <span>SPIACENTE...ma il catagolo non ï¿½ stato aggiornato</span>
       </div>
       <div th:unless="${newRecipes.isEmpty()}">
         <div th:each="rep : ${newRecipes}">

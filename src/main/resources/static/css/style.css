@@ -19,5 +19,11 @@
 
 body{
 	background: linear-gradient(45deg, blue, red);
-	height: 100vh; 
+	height: 100vh;
+	padding-top: 60px;
+}
+
+.navbar-brand:hover {
+	opacity: 0.5;
+	transition: 0.2s;
 }
