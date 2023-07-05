@@ -52,7 +52,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
                 .authorizeHttpRequests()
 
                 // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
-                .requestMatchers(HttpMethod.GET,"/","/index", "/categories/**", "/recipes/**", "/registration", "/login" , "/css/**", "/images/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"/","/index", "/categories/**", "/recipes/**", "/registration", "/login", "/success", "/css/**", "/images/**").permitAll()
                 // chiunque sia autorizzato (user e admin) possono accedere a tutte le sezioni con prefisso '/user/**'
                 .requestMatchers(HttpMethod.GET,"/user/**").hasAnyAuthority(ADMIN_ROLE, USER_ROLE)
                 .requestMatchers(HttpMethod.POST,"/user/**").hasAnyAuthority(ADMIN_ROLE, USER_ROLE)

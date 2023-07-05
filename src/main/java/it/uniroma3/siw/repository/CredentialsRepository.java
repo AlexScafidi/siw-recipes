@@ -9,7 +9,7 @@ import it.uniroma3.siw.model.Credentials;
 
 public interface CredentialsRepository extends CrudRepository<Credentials, Long> {
 
-	@Query(nativeQuery = true, value = "select *" + "from Credentials s" + "where s.username = :username")
+	@Query(nativeQuery = true, value = "select * from Credentials s where s.username = :username")
 	public Optional<Credentials> findByUsername(String username);
 
 //	@Query(nativeQuery = true, 
