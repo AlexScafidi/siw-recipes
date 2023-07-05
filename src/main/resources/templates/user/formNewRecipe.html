@@ -10,8 +10,8 @@
   	</head>
   
   	<body>
-    	<h1>Aggiungi un film</h1>
-    	<form th:action="@{/user/formNewRecipe}" method="POST" th:object="${recipe}">
+    	<h1>Aggiungi un </h1>
+    	<form th:action="@{/user/newRecipe}" method="POST" th:object="${recipe}">
       	<div th:if="${#fields.hasGlobalErrors()}">
 			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
 		</div>
@@ -20,12 +20,17 @@
 			<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
 		</div>
 				<div>
-			<label for="testoPresentazione">Presentazione:</label><textarea id="testo" rows="4" th:placeholder="Scrivi qui il testo...." th:field="${presentationText}"></textarea>
-			<span th:if="${#fields.hasErrors('presentetionText')}" th:errors="*{presentationText}"></span>
+			<label for="testoPresentazione">Presentazione:</label><textarea id="testo" rows="4" placeholder="Scrivi qui il testo...." th:field="*{presentationText}"></textarea>
+			<span th:if="${#fields.hasErrors('presentationText')}" th:errors="*{presentationText}"></span>
 		</div>
 		<div>
-			<label for="testoPreparezione">Preparezione:</label><textarea id="testo" rows="4" th:placeholder="Scrivi qui il testo...." th:field="${preparetionText}"></textarea>
+			<label for="testoPreparezione">Preparezione:</label><textarea id="testo" rows="4" placeholder="Scrivi qui il testo...." th:field="*{preparetionText}"></textarea>
 			<span th:if="${#fields.hasErrors('preparetionText')}" th:errors="*{preparetionText}"></span>
+		</div>
+		<div>
+		<form th:action="@{/user/listIngredientsToAdd}">
+		<button type="submit" value="aggiungi_ingredienti">Aggiungi ingredienti</button>
+		</form>
 		</div>
 		<div>
 			<span><button type="submit">Conferma</button></span>

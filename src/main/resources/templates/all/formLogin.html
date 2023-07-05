@@ -13,24 +13,29 @@
       <h1>siw reciper</h1>
     </header>
 
-  <h1>Login</h1>
+  <h1>Login page</h1>
 
   <a href="/index">Go back</a>
 
-  <form action="/login" method="POST">
+  <form th:action="@{/login}" method="POST">
     <div>
       <label for="username">Username:</label>
-      <input id="username" name="username" type="text" required>
+      <br>
+      <input id="username" name="username" type="text">
     </div>
     <div>
       <label for="password">Password:</label>
-      <input id="password" name="password" type="password" required>
+      <br>
+      <input id="password" name="password" type="password">
     </div>
     <div>
       <span th:if="${param.error != null}">Wrong username or password</span>
     </div>
     <div>
-      <button type="submit">Login</button>
+      <button type="submit" value="login" style="
+      margin-top: 5px;
+      border-radius: 4px;  
+      ">Login</button>
     </div>
   </form>
 

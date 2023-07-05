@@ -6,8 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Recipe;
+import it.uniroma3.siw.service.CategoryService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.validation.RecipeValidator;
@@ -22,6 +24,8 @@ public class RecipeController {
 	private IngredientService ingredientService; 
 	@Autowired
 	private RecipeValidator recipeValidator;
+	@Autowired
+	private CategoryService categoryService; 
 	
 	@GetMapping(value="/recipes")
 	public String getAllRecipes(Model model) {
@@ -48,18 +52,12 @@ public class RecipeController {
 	@GetMapping(value="/user/formNewRecipe")
 	public String showFormNewRecipe(Model model) {
 		model.addAttribute("recipe", new Recipe()); 
+		model.addAttribute("categories", this.categoryService.getAllCategories()); 
 		return "user/formNewRecipe.html"; 
 	}
-
-	/**
-	 * GET : controllo intermedio dei campi, se tutto ok -> redirezione altrimenti ritorno alla form
-	 * @param recipe
-	 * @param recipeBindingResult
-	 * @param model
-	 * @return
-	 */
-	@GetMapping(value="/user/checkFieldsNewRecipe")
-	public String checkFieldsRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model) {
+	
+	@PostMapping(value="/user/newRecipe")
+	public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model) {
 
 		this.recipeValidator.validate(recipe,recipeBindingResult); 
 		if(recipeBindingResult.hasErrors()) return "user/formNewRecipe.html"; 
@@ -67,6 +65,23 @@ public class RecipeController {
 		//altrimenti
 		return "redirect:/user/listIngredientToAdd";
 	}
+	
+//	/**
+//	 * GET : controllo intermedio dei campi, se tutto ok -> redirezione altrimenti ritorno alla form
+//	 * @param recipe
+//	 * @param recipeBindingResult
+//	 * @param model
+//	 * @return
+//	 */
+//	@GetMapping(value="/user/checkFieldsNewRecipe")
+//	public String checkFieldsRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model) {
+//
+//		this.recipeValidator.validate(recipe,recipeBindingResult); 
+//		if(recipeBindingResult.hasErrors()) return "user/formNewRecipe.html"; 
+//		
+//		//altrimenti
+//		return "redirect:/user/listIngredientToAdd";
+//	}
 	
 	@GetMapping(value="/user/listIngredientsToAdd")
 	public String showAllIngredientToAdd(@ModelAttribute("recipe") Recipe recipe, Model model) {

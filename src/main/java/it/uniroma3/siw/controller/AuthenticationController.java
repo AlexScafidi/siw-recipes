@@ -131,8 +131,7 @@ public class AuthenticationController {
 	private CredentialsService credentialsService;
 	@Autowired
 	private UserService userService;
-//	@Autowired
-//	private UserValidator userValidator;
+
 
 	@GetMapping(value = "/registration")
 	public String showRegistrationForm(Model model) {
@@ -144,15 +143,12 @@ public class AuthenticationController {
 	@PostMapping(value = "/registration")
 	public String registerUser( @ModelAttribute("user") User user,
 			 @ModelAttribute("credentials") Credentials credentials, Model model) {
-		// controllo
-//		this.credentialsValidator.validate(credentials,credentialsBd);
-//		this.userValidator.validate(user, userBd); 
 
 			// registro l'utente
 		    user.setRegistrationDate(LocalDateTime.now()); 
-			userService.save(user);
+			this.userService.save(user);
 			credentials.setUser(user);
-			credentialsService.saveCredentials(credentials);
+			this.credentialsService.saveCredentials(credentials);
 			model.addAttribute("user", user);
 			return "all/registrationSuccess.html";
 
@@ -201,7 +197,7 @@ public class AuthenticationController {
 			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 			System.out.println("success :" + credentials.getRole()); 
 			if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) return "redirect:/admin/index";
-		return "all/index.html";
+		return "redirect:/index";
 	}
 		
 	}

@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+
+.button{
+	border-radius: 5px; 
+	border: none; 
+	color: black; 
+	padding: 5px; 
+	text-align: center; 
+	text-decoration: none; 
+	display: inline-block; /*anche senza flex box*/
+	transition-duration: 0.5s; 
+	cursor: pointer;
+}
+
+.button:hover{
+	background-color: orange;  
+	color: black; 
+}
+
+body{
+	background: linear-gradient(45deg, blue, red);
+	height: 100vh; 
+}

@@ -28,9 +28,9 @@ public class Recipe {
 	@Column(nullable = false)
 	@NotBlank
 	private String preparetionText;
-//	@Column(nullable = false)
-//	@NotBlank
-	private String presentatioText; 
+	@Column(nullable = false)
+	@NotBlank
+	private String presentationText; 
 	private boolean isNew; 
 	@ManyToOne
 	private User author; 
@@ -71,12 +71,12 @@ public class Recipe {
 		this.preparetionText = preparetionText;
 	}
 
-	public String getPresentatioText() {
-		return presentatioText;
+	public String getPresentationText() {
+		return presentationText;
 	}
 
 	public void setPresentatioText(String presentatioText) {
-		this.presentatioText = presentatioText;
+		this.presentationText = presentatioText;
 	}
 
 	public boolean isNew() {
