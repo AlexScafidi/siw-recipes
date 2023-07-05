@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Ingredient;
+import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.repository.IngredientRepository;
 import jakarta.transaction.Transactional;
 
@@ -32,6 +33,13 @@ public class IngredientService {
 	public List<Ingredient> getAllIngredients() {
 		List<Ingredient> ingredients = new LinkedList<>(); 
 		for(Ingredient ing : this.ingredientRepository.findAll()) ingredients.add(ing); 
+		return ingredients;
+	}
+	
+	@Transactional
+	public List<Ingredient> getAllIngredientsNotInRecipe(Recipe recipe) {
+		List<Ingredient> ingredients = new LinkedList<>(); 
+		for(Ingredient ing : this.ingredientRepository.findAllIngredientsNotInRecipe(recipe.getTitle())) ingredients.add(ing); 
 		return ingredients;
 	}
 	

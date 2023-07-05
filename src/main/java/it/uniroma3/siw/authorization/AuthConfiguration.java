@@ -50,15 +50,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
         httpSecurity
                 .csrf().and().cors().disable()
                 .authorizeHttpRequests()
-//                .requestMatchers("/**").permitAll()
+
                 // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
-//                .requestMatchers(HttpMethod.GET,"/","/index","/registration","/login" ,"/css/**", "/images/**", "favicon.ico").permitAll()
-                .requestMatchers(HttpMethod.GET,"/","/index", "/categories/**","/recipes" , "/recipes/**", "/newRecipes","/registration", "/login" , "/css/**", "/images/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"/","/index", "/categories/**", "/recipes/**", "/registration", "/login" , "/css/**", "/images/**").permitAll()
+                // chiunque sia autorizzato (user e admin) possono accedere a tutte le sezioni con prefisso '/user/**'
                 .requestMatchers(HttpMethod.GET,"/user/**").hasAnyAuthority(ADMIN_ROLE, USER_ROLE)
                 .requestMatchers(HttpMethod.POST,"/user/**").hasAnyAuthority(ADMIN_ROLE, USER_ROLE)
                 // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register 
-                
                 .requestMatchers(HttpMethod.POST,"/registration", "/login").permitAll()
+                // gli admin sono i soli autorizzati ad accedere a tali sezioni
                 .requestMatchers(HttpMethod.GET,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 .requestMatchers(HttpMethod.POST,"/admin/**").hasAnyAuthority(ADMIN_ROLE)
         		// tutti gli utenti autenticati possono accere alle pagine rimanenti 

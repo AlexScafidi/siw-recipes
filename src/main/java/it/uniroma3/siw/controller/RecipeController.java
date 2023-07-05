@@ -1,17 +1,16 @@
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.model.Recipe;
+import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
+import it.uniroma3.siw.validation.RecipeValidator;
 import jakarta.validation.Valid;
 
 @Controller
@@ -19,8 +18,10 @@ public class RecipeController {
 	
 	@Autowired
 	private RecipeService recipeService;
-//	@Autowired 
-//	private UserService userService; 
+	@Autowired 
+	private IngredientService ingredientService; 
+	@Autowired
+	private RecipeValidator recipeValidator;
 	
 	@GetMapping(value="/recipes")
 	public String getAllRecipes(Model model) {
@@ -28,30 +29,73 @@ public class RecipeController {
 		return "all/recipes.html";
 	}
 	
-	@GetMapping(value="/newRecipes")
+	/**
+	 * GET : pagina con tutte le nuove ricette, indipendemente dalla categoria
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value="/recipes/newRecipes")
 	public String getAllNewRecipes(Model model) {
 		model.addAttribute("newRecipes", this.recipeService.getAllNewRecipe()); 
 		return "all/newRecipes.html";
 	}
 	
+	/**
+	 * GET : PAGINA INIZIALE PER INSERIRE UNA NUOVA RICETTA NEL SISTEMA
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value="/user/formNewRecipe")
 	public String showFormNewRecipe(Model model) {
 		model.addAttribute("recipe", new Recipe()); 
 		return "user/formNewRecipe.html"; 
 	}
-	
-	@PostMapping(value="/user/formNewRecipe")
-	public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, 
-			@RequestParam("userDetails") UserDetails userDetails, 
-			BindingResult RecipeBindingResult, Model model) {
+
+	/**
+	 * GET : controllo intermedio dei campi, se tutto ok -> redirezione altrimenti ritorno alla form
+	 * @param recipe
+	 * @param recipeBindingResult
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value="/user/checkFieldsNewRecipe")
+	public String checkFieldsRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model) {
+
+		this.recipeValidator.validate(recipe,recipeBindingResult); 
+		if(recipeBindingResult.hasErrors()) return "user/formNewRecipe.html"; 
 		
-		//controllo di validazione
-		if(RecipeBindingResult.hasErrors()) {return "user/formNewRecipe.html";}
-		
-		//altrimenti salvo,associo all'utente e la mostro la ricetta nella sua pagina
-		
-		model.addAttribute("recipe", this.recipeService.createNewRecipe(recipe,userDetails)); 
-		return "all/recipe.html"; 
+		//altrimenti
+		return "redirect:/user/listIngredientToAdd";
 	}
+	
+	@GetMapping(value="/user/listIngredientsToAdd")
+	public String showAllIngredientToAdd(@ModelAttribute("recipe") Recipe recipe, Model model) {
+		if(recipe == null) return "all/newRecipeError.html"; 
+		model.addAttribute("recipe", recipe); 
+		model.addAttribute("ingredients", recipe.getIngredients()); 
+		model.addAttribute("ingredientsToAdd", this.ingredientService.getAllIngredientsNotInRecipe(recipe)); 
+		return "user/listIngredientsToAdd.html"; 
+	}
+//	/**
+//	 * DA COMPLETARE/MIGLIORARE
+//	 * @param recipe
+//	 * @param userDetails
+//	 * @param RecipeBindingResult
+//	 * @param model
+//	 * @return
+//	 */
+//	@PostMapping(value="/user/formNewRecipe")
+//	public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, 
+//			@RequestParam("userDetails") UserDetails userDetails, 
+//			BindingResult RecipeBindingResult, Model model) {
+//		
+//		//controllo di validazione
+//		if(RecipeBindingResult.hasErrors()) {return "user/formNewRecipe.html";}
+//		
+//		//altrimenti salvo,associo all'utente e la mostro la ricetta nella sua pagina
+//		
+//		model.addAttribute("recipe", this.recipeService.createNewRecipe(recipe,userDetails)); 
+//		return "all/recipe.html"; 
+//	}
 
 }
