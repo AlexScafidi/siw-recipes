@@ -18,7 +18,7 @@ public class Ingredient {
 	
 	@Column(nullable = false, unique = true)
 	@NotBlank
-	private String name; 
+	private String name;
 	
 	public Ingredient() {}
 
