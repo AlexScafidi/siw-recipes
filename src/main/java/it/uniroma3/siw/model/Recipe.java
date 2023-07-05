@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,8 +27,10 @@ public class Recipe {
 	private String title;
 	@Column(nullable = false)
 	@NotBlank
-	private String text; 
-	@Column(nullable = false)
+	private String preparetionText;
+//	@Column(nullable = false)
+//	@NotBlank
+	private String presentatioText; 
 	private boolean isNew; 
 	@ManyToOne
 	private User author; 
@@ -57,13 +60,23 @@ public class Recipe {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-	public String getText() {
-		return text;
+	
+	
+	
+	public String getPreparetionText() {
+		return preparetionText;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setPreparetionText(String preparetionText) {
+		this.preparetionText = preparetionText;
+	}
+
+	public String getPresentatioText() {
+		return presentatioText;
+	}
+
+	public void setPresentatioText(String presentatioText) {
+		this.presentatioText = presentatioText;
 	}
 
 	public boolean isNew() {
@@ -74,12 +87,12 @@ public class Recipe {
 		this.isNew = isNew;
 	}
 
-	public User getAutor() {
+	public User getAuthor() {
 		return author;
 	}
 
-	public void setAutor(User autor) {
-		this.author = autor;
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 
 	public Category getCategory() {
@@ -106,11 +119,25 @@ public class Recipe {
 		this.comments = comments;
 	}
 	
+	/**
+	 * Ritorna la media dei voti ricevuti alla ricetta
+	 * @return
+	 */
 	public float getVote() {
 		float vote = 0.0f;
 		
 		for(Comment comment : this.getComments()) vote+=comment.getVote();
 		return vote/this.getComments().size(); 
+	}
+	
+	/**
+	 * ritorna tutti gli  ingredienti presenti nella ricetta
+	 * @return
+	 */
+	public List<Ingredient> getIngredients(){
+		List<Ingredient> ingredients = new LinkedList<>();
+		for(IngredientQuantity ingredientQuantity : this.quantityIngredients){ ingredients.add(ingredientQuantity.getIngredient()); }
+		return ingredients; 
 	}
 
 	@Override

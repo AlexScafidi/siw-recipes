@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
@@ -37,18 +40,16 @@ public class User {
 	@NotBlank
 	@Email
 	private String email;
-
 	
 	@Column(nullable = false)
 	@PastOrPresent
+	@NotNull
+	@DateTimeFormat(pattern = "YYYY-MM-dd")
 	private LocalDate dateOfBirth; 
 	
 	@Column(nullable = false)
-	@PastOrPresent
-	private LocalDateTime dateOfregistration;
-	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private Address address;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	private LocalDateTime registrationDate;
 	
 	@OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
 	private List<Recipe> recipes;
@@ -113,16 +114,16 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	
 
-
-	public LocalDateTime getDateOfregistration() {
-		return dateOfregistration;
+	public LocalDateTime getRegistrationDate() {
+		return registrationDate;
 	}
 
 
 
-	public void setDateOfregistration(LocalDateTime dateOfregistration) {
-		this.dateOfregistration = dateOfregistration;
+	public void setRegistrationDate(LocalDateTime registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 

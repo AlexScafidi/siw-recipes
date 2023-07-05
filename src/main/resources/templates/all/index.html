@@ -10,7 +10,7 @@
   </head>
   <body>
     <header>
-      <h1>siw recipes</h1>
+    <!--    <h1>siw recipes</h1>
           <div class="login-register">
     <form action="/login">
       <button>Login</button>
@@ -18,7 +18,16 @@
          <form th:action="@{/registration}">
       <button>Registration</button>
       </form>
-    </div>
+    </div> -->
+    		<div>
+			<div th:if="${userDetails}" th:object="${userDetails}">
+				<span th:text="*{username}"></span> <a href="/logout">Logout</a>
+			</div>
+			<div th:unless="${userDetails}">
+				<a href="/login">Login</a>
+				<a href="/registration">Registrati</a>
+			</div>
+			</div>
     </header>
     <div>
       <h1>homepage</h1>

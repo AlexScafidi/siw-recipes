@@ -51,7 +51,7 @@ public class RecipeService {
 		if(user == null || recipe == null) return null; 
 		//altrimenti
 		user.getRecipes().add(recipe);
-		recipe.setAutor(user);
+		recipe.setAuthor(user);
 		//cascading
 		this.userService.save(user); 
 		return this.recipeRepository.save(recipe); 
