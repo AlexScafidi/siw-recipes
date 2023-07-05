@@ -26,6 +26,7 @@
 		<div>
 			<label for="testoPreparezione">Preparezione:</label><textarea id="testo" rows="4" th:placeholder="Scrivi qui il testo...." th:field="${preparetionText}"></textarea>
 			<span th:if="${#fields.hasErrors('preparetionText')}" th:errors="*{preparetionText}"></span>
+
 		</div>
 		<div>
 			<span><button type="submit">Conferma</button></span>
