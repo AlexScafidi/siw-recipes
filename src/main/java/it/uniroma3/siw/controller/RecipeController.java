@@ -13,6 +13,7 @@ import it.uniroma3.siw.service.CategoryService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.validation.RecipeValidator;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -26,6 +27,8 @@ public class RecipeController {
 	private RecipeValidator recipeValidator;
 	@Autowired
 	private CategoryService categoryService; 
+	@Autowired
+	private HttpSession httpSession; 
 	
 	@GetMapping(value="/recipes")
 	public String getAllRecipes(Model model) {
@@ -63,7 +66,14 @@ public class RecipeController {
 		if(recipeBindingResult.hasErrors()) return "user/formNewRecipe.html"; 
 		
 		//altrimenti
-		return "redirect:/user/listIngredientToAdd";
+		return "";
+	}
+	
+	@GetMapping(value="/user/returnFormNewRecipe")
+	public String returnToFormNewRecipe(@ModelAttribute("recipe") Recipe recipe,Model model) {
+		Recipe recipeNew = (Recipe) this.httpSession.getAttribute("recipe");
+		model.addAttribute("recipe",recipeNew);
+		return "user/formNewRecipe.html";
 	}
 	
 //	/**
@@ -83,13 +93,14 @@ public class RecipeController {
 //		return "redirect:/user/listIngredientToAdd";
 //	}
 	
-	@GetMapping(value="/user/listIngredientsToAdd")
+	@PostMapping(value="/user/ingredientsToAdd")
 	public String showAllIngredientToAdd(@ModelAttribute("recipe") Recipe recipe, Model model) {
 		if(recipe == null) return "all/newRecipeError.html"; 
+		System.out.println(recipe.getTitle());
 		model.addAttribute("recipe", recipe); 
 		model.addAttribute("ingredients", recipe.getIngredients()); 
 		model.addAttribute("ingredientsToAdd", this.ingredientService.getAllIngredientsNotInRecipe(recipe)); 
-		return "user/listIngredientsToAdd.html"; 
+		return "user/ingredientsToAdd.html"; 
 	}
 //	/**
 //	 * DA COMPLETARE/MIGLIORARE
