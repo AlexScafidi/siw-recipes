@@ -14,11 +14,19 @@
 		  
     	<h1>Aggiungi un </h1>
     	<form th:action="@{/user/newRecipe}" method="POST" th:object="${recipe}">
+<fieldset>
+<legend>Nuova ricetta</legend>
       	<div th:if="${#fields.hasGlobalErrors()}">
 			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
 		</div>
 		<div>
-			<label for="titolo">Titolo:</label> <span><input type="text" th:field="*{title}" placeholder="Inserire il titolo..."/></span>
+			<label for="titolo">Titolo:</label> 
+			<span th:if="*{title}">
+			<span><input type="text" th:field="*{title}" name="title" th:placeholder="*{title}"/></span>
+			</span>
+					<span th:unless="*{title}">
+			<span><input type="text" th:field="*{title}" name="title" placeholder="Inserire il titolo..."/></span>
+			</span>
 			<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
 		</div>
 				<div>
@@ -31,13 +39,9 @@
 
 		</div>
 		<div>
-		<form th:action="@{/user/listIngredientsToAdd}">
-		<button type="submit" value="aggiungi_ingredienti">Aggiungi ingredienti</button>
-		</form>
-		</div>
-		<div>
 			<span><button type="submit">Conferma</button></span>
 		</div>
-		</form>
+</fieldset>
+
 	</body>
 </html>

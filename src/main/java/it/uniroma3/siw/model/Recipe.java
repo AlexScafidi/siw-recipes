@@ -43,6 +43,8 @@ public class Recipe {
 	
 	public Recipe() {
 		this.isNew = true; 
+		this.comments = new LinkedList<>(); 
+		this.quantityIngredients = new LinkedList<>(); 
 	}
 
 	public Long getId() {

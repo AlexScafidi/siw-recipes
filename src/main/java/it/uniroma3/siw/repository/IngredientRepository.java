@@ -8,7 +8,7 @@ import it.uniroma3.siw.model.Ingredient;
 public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
 
 	@Query(nativeQuery = true, 
-			value="select name from ingredient i where i.id not in \r\n"
+			value="select * from ingredient i where i.id not in \r\n"
 					+ "(select ii.id from recipe r \r\n"
 					+ " join recipe_quantity_ingredients rqi on r.id = rqi.recipe_id \r\n"
 					+ " join ingredient_quantity qi on rqi.quantity_ingredients_id = qi.id \r\n"
