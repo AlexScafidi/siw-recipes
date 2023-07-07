@@ -27,3 +27,22 @@ body{
 	opacity: 0.5;
 	transition: 0.2s;
 }
+
+.goBackArrow {
+	font-size: 2em;
+	margin-top: 4%;
+	width: 4%;
+	background: linear-gradient(45deg, blue, blueviolet);
+}
+
+@media screen and (max-width: 600px) {
+	.goBackArrow {
+		background: linear-gradient(45deg,  rgb(149, 14, 156), rgb(209, 24, 121));
+		margin-top: 13.5%;
+		width: 13%;
+	}
+}
+
+.goBackArrow:hover {
+	opacity: 0.7;
+}
