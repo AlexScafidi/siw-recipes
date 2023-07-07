@@ -124,6 +124,7 @@ import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.validation.CredentialsValidator;
 import jakarta.validation.Valid;
 
 @Controller
@@ -133,6 +134,8 @@ public class AuthenticationController {
 	private CredentialsService credentialsService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CredentialsValidator credsValidator;
 
 
 	@GetMapping(value = "/registration")
@@ -147,6 +150,7 @@ public class AuthenticationController {
 			@Valid @ModelAttribute("credentials") Credentials credentials, BindingResult credsBind, Model model) {
 
 		// registro l'utente
+		this.credsValidator.validate(credentials, credsBind);
 		if(!userBind.hasErrors() && !credsBind.hasErrors()) {
 			user.setRegistrationDate(LocalDateTime.now()); 
 			this.userService.save(user);

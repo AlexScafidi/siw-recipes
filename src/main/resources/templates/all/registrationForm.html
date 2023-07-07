@@ -16,9 +16,11 @@
     <header th:insert="~{/fragments/fragments.html :: header}"></header>
 
     <a href="/index" class="btn btn-dark fixed-top goBackArrow">&larr;</a>
-
+	
     <form th:action="@{/registration}" method="POST">
+		
         <h1>Registrazione utente</h1>
+        
         <fieldset>
             <legend><span class="number">1</span>Scegli uno username</legend>
             <input type="text" placeholder="Username" required th:field="${credentials.username}">
