@@ -21,19 +21,19 @@
         <h1>Effettua il login</h1>
         <fieldset>
             <legend><span class="number">1</span>Inserisci lo username</legend>
-            <input type="text" placeholder="Username">
+            <input name="username" type="text" placeholder="Username">
         </fieldset>
 
         <fieldset>
             <legend><span class="number">2</span>Inserisci la password</legend>
-            <input type="password" placeholder="Password">
+            <input name="password" type="password" placeholder="Password">
         </fieldset>
+        
+		<div>
+        	<span th:if="${param.error != null}">Wrong username or password</span>
+    	</div>        
 
         <button class="formButton mt-2" type="submit">Conferma</button>
-    </form>
-    <div>
-        <span th:if="${param.error != null}">Wrong username or password</span>
-    </div>
     </form>
 
     <footer>
