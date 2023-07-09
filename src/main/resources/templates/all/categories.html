@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/stileCategories.css" />
 </head>
 
 <body>
@@ -18,18 +19,38 @@
         <div>
             <h2 class="mt-4">Categorie disponibili</h2>
         </div>
-        <div>
-			<div th:if="${categories.isEmpty()}">
+    </div>
+        
+<div class="container mt-4">
+    <div class="col-md-12 col-lg-12">
+		<div th:if="${categories.isEmpty()}">
                 <span>Non sono presenti categorie di ricette nel sistema</span>
+        </div>
+        <div th:unless="${categories.isEmpty()}">
+        <article class="post vt-post" th:each="cat : ${categories}">
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+                    <div class="post-type post-img">
+                        <a th:href="@{'/category/' + ${cat.id}}"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-responsive" alt="image post"></a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+                    <div class="caption">
+                        <a class="linkCategoria h2" th:href="@{'/category/' + ${cat.id}}" th:text="${cat.name}"></a>
+                        <p class="mb-5" th:text="${cat.description}"></p>
+                        <a class="btn d-block btn-lg w-50 btn-dark" th:href="@{'/category/' + ${cat.id}}" role="button">Guarda tutte le ricette</a> </div>
+                </div>
             </div>
-            <div th:unless="${categories.isEmpty()}">
-                <div th:each="cat : ${categories}">
+        </article>
+        </div>
+    </div>
+</div>
+        <!--
                     <a th:href="@{'/category/' + ${cat.id}}" th:text="${cat.name}"></a>
                     <span th:text="${cat.description}"></span>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> -->
 </body>
 
 </html>

@@ -26,6 +26,8 @@ body {
 	height: 100vh;
 	padding-top: 60px;
 	margin: 0;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 .navbar-brand:hover {
