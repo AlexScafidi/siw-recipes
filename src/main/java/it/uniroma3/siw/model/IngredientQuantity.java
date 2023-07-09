@@ -13,6 +13,8 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 public class IngredientQuantity {
 	
+	final public static String misures[] = {"N.D","Kg","g","etti","tazze","l","dl","cl","ml","cc"};
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -22,7 +24,7 @@ public class IngredientQuantity {
 	@Column(nullable = false)
 	@NotBlank
 	@Min(1)
-	private Integer quantity; 
+	private Integer quantity;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Ingredient ingredient;
 	

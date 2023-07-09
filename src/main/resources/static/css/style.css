@@ -1,5 +1,9 @@
 @charset "ISO-8859-1";
 
+* {
+	box-sizing: content-box;
+}
+
 .button{
 	border-radius: 5px; 
 	border: none; 
@@ -17,10 +21,11 @@
 	color: black; 
 }
 
-body{
+body {
 	background: linear-gradient(45deg, blue, red);
 	height: 100vh;
 	padding-top: 60px;
+	margin: 0;
 }
 
 .navbar-brand:hover {
@@ -45,4 +50,9 @@ body{
 
 .goBackArrow:hover {
 	opacity: 0.7;
+}
+
+.alert {
+	background-color: rgb(152, 251, 152);
+	border-color: rgb(7, 214, 7);
 }

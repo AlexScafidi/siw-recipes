@@ -20,7 +20,7 @@
 	                <div class="collapse navbar-collapse" id="collapsibleNavbar">
     	                <ul th:if="${userDetails}" class="navbar-nav ms-auto">
         	                <li class="nav-item">
-            	                <span style="color: gray" th:text="${'Login effettuato come: '+userDetails.username}"></span>
+            	                <span th:text="${userDetails.username}"></span>
                 	            <a class="btn btn-danger" href="/logout">Logout</a>
                     	    </li>
                     	</ul>

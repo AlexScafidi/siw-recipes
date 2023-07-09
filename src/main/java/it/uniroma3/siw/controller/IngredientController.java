@@ -27,12 +27,14 @@ public class IngredientController {
 		return "user/formNewIngredient.html";
 	}
 	
-	@PostMapping("/user/formNewReview")
+	@PostMapping("/user/formNewIngredient")
 	public String newIngredient(@Valid @ModelAttribute("ingredient") Ingredient ing, 
 			BindingResult bindRes, Model model) {
 		this.ingredientValidator.validate(ing, bindRes);
 		if(!bindRes.hasErrors()) {
-			
+			this.ingredientService.saveIngredient(ing);
+			model.addAttribute("nomeIng", ing.getName());
+			return "all/index.html";
 		}
 		return "user/formNewIngredient.html";
 	}

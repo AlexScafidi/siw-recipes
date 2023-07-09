@@ -16,11 +16,11 @@
 	<header th:insert="~{/fragments/fragments.html :: header}"></header>
     <div class="row">
         <div class="col-md-12">
-			<form th:action="@{'/'}" method="POST" th:object="${ingredient}">
+			<form th:action="@{'/user/formNewIngredient'}" method="POST" th:object="${ingredient}">
                 <h1>Inserisci un ingrediente</h1>
                 <fieldset>
                     <legend><span class="number">1</span> Nome ingrediente</legend>
-                    <input type="text" placeholder="Nome">
+                    <input type="text" placeholder="Nome" th:field="*{name}">
                 </fieldset>
                 
                 <fieldset>

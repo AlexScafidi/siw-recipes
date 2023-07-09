@@ -12,10 +12,10 @@
     <link rel="stylesheet" href="/css/stileForm.css" />
 </head>
 
-<body>
+<body class="h-100">
     <header th:insert="~{/fragments/fragments.html :: header}"></header>
 
-    <a href="/index" class="btn btn-dark fixed-top goBackArrow">&larr;</a>
+    <a href="/index" class="btn btn-dark fixed-top goBackArrow" title="Torna indietro">&larr;</a>
 	
     <form th:action="@{/registration}" method="POST">
 		

@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,9 +30,11 @@ public class Category {
 	private String description; 
 	
 	@OneToMany(mappedBy = "category",fetch = FetchType.EAGER,  cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH,})
-	private Set<Recipe> recipes; 
+	private Set<Recipe> recipes;
 	
-	public Category() {}
+	public Category() {
+		this.recipes = new HashSet<>();
+	}
 
 	public Long getId() {
 		return id;

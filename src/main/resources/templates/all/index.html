@@ -10,29 +10,35 @@
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 
-<body>
+<body style="height: 93.5vh;">
     <header th:insert="~{/fragments/fragments.html :: header}"></header>
-    <div>
-        <h1>siw recipes</h1>
-        <h3>homepage</h3>
+    
+    <div th:if="${nomeIng}" class="w-50 mx-auto alert alert-dismissible fade show">
+    	<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    	Ingrediente <strong><span th:text="${nomeIng}"></span></strong> aggiunto con successo!
+  	</div>
+    
+    <div class="container text-center mb-3">
+        <h1>SIW Recipes</h1>
+        <h3>-Homepage-</h3>
     </div>
-    <div>
-        <h3>sezioni disponibili</h3>
+    <div class="container text-center">
+        <h3 class="mb-4">Sezioni Disponibili</h3>
         <div>
-            <a th:href="@{/categories}">Categorie</a>
-            <p>Seleziona le ricette in base alla categoria</p>
+            <a class="btn btn-dark d-block mx-auto" style="width: 15%;" th:href="@{/categories}">Categorie</a>
+            <p class="h6 mb-4">Seleziona le ricette in base alla categoria</p>
         </div>
         <div>
-            <a th:href="@{/recipes}">Ricette</a>
-            <p>Seleziona tutte le ricette</p>
+            <a class="btn btn-dark d-block mx-auto" style="width: 15%;" th:href="@{/recipes}">Ricette</a>
+            <p class="h6 mb-4">Seleziona tutte le ricette</p>
         </div>
         <div>
-            <a th:href="@{/recipes/newRecipes}">Nuove ricette</a>
-            <p>Visualizza tutte le nuove ricette</p>
+            <a class="btn btn-dark d-block mx-auto" style="width: 15%;" th:href="@{/recipes/newRecipes}">Nuove ricette</a>
+            <p class="h6 mb-4">Visualizza tutte le nuove ricette</p>
 
             <div sec:authorize="isAuthenticated()">
-                <a th:href="@{/user/formNewRecipe}">Inserisci ricetta</a>
-                <p>Inserisci una nuova ricetta</p>
+                <a class="btn btn-dark d-block mx-auto" style="width: 15%;" th:href="@{/user/formNewRecipe}">Inserisci ricetta</a>
+                <p class="h6 mb-4">Inserisci una nuova ricetta</p>
             </div>
         </div>
 </body>

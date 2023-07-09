@@ -21,7 +21,7 @@
       </div>
       <div th:unless="${newRecipes.isEmpty()}">
         <div th:each="rep : ${newRecipes}">
-          <a th:href="@{'/recipes/' + ${rep.id}" th:text="${rep.name}"></a> 
+          <a th:href="@{'/recipe/' + ${rep.id}}" th:text="${rep.title}"></a> 
         </div>
       </div>
   </body>
