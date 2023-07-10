@@ -48,6 +48,12 @@ public class RecipeController {
 		return "all/newRecipes.html";
 	}
 	
+	@GetMapping("/recipe/{id}")
+	public String recipe(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("recipe", this.recipeService.getRecipe(id));
+		return "all/recipe.html";
+	}
+	
 	/**
 	 * GET : PAGINA INIZIALE PER INSERIRE UNA NUOVA RICETTA NEL SISTEMA
 	 * @param model
