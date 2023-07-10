@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Ingredient;
@@ -37,5 +38,27 @@ public class IngredientController {
 			return "all/index.html";
 		}
 		return "user/formNewIngredient.html";
+	}
+	
+	@GetMapping("/ingredients")
+	public String ingredients(Model model) {
+		model.addAttribute("ingredients", this.ingredientService.getAllIngredients());
+		return "all/ingredients.html";
+	}
+	
+	@GetMapping("/admin/updateIngredient/{id}")
+	public String formUpdateIngredient (@PathVariable("id") Long id, Model model) {
+		model.addAttribute("ingredient", this.ingredientService.getIngredient(id));
+		return "admin/formUpdateIngredient.html";
+	}
+	
+	@PostMapping("/admin/updateIngredient/{id}")
+	public String updateIngredient (@PathVariable("id") Long id, @ModelAttribute("ingredient") Ingredient ing, 
+			Model model) {
+		Ingredient oldIng = this.ingredientService.getIngredient(id);
+		oldIng.setName(ing.getName());
+		this.ingredientService.saveIngredient(oldIng);
+		model.addAttribute("ingredients", this.ingredientService.getAllIngredients());
+		return "all/ingredients.html";
 	}
 }

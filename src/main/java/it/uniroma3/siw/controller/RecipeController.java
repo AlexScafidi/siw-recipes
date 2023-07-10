@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Recipe;
@@ -123,5 +124,12 @@ public class RecipeController {
 //		model.addAttribute("recipe", this.recipeService.createNewRecipe(recipe,userDetails)); 
 //		return "all/recipe.html"; 
 //	}
+	
+	@GetMapping("/admin/deleteRecipe/{id}")
+	public String deleteRecipe(@PathVariable("id") Long id, Model model) {
+		this.recipeService.deleteRecipe(id);
+		model.addAttribute("recipes", this.recipeService.getAllRecipe());
+		return "all/recipes.html";
+	}
 
 }

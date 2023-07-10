@@ -48,4 +48,8 @@ public class IngredientService {
 		this.ingredientRepository.deleteById(id);
 	}
 
+	public Ingredient getIngredient(Long id) {
+		return this.ingredientRepository.findById(id).get();
+	}
+
 }

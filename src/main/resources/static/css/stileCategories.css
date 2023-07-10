@@ -73,3 +73,19 @@ body{
 .linkCategoria:hover {
 	opacity: 0.8;
 }
+
+.linkModifica {
+	position: relative;
+	margin-top: -50px;
+	margin-left: 80%;
+}
+
+@media screen and (max-width: 600px) {
+	.linkModifica {
+		margin-left: 70%;
+	}
+	
+	.linkGuardaRicette {
+		margin:auto;
+	}
+}
