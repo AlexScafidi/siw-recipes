@@ -51,9 +51,15 @@
                 </div>
                 
                 <div id="comments" class="container tab-pane">
+					<a class="btn btn-dark d-block mx-auto w-50 mb-3" sec:authorize="isAuthenticated()" 
+									th:href="@{'/user/formNewComment/'+*{id}}">Aggiungi un commento</a>
                     <ul th:each="comment : *{comments}" style="word-wrap: break-word; margin-right: 20px;">
 						<li>
-							<h4 th:text="${comment.title+' Voto: '+comment.vote+' ('+comment.author+')'}"></h4>
+							<h4 style="display: inline;" th:text="${comment.title+' - Voto: '+comment.vote+' ('+comment.author.name+' '+comment.author.surname+')'}"></h4>
+							<a th:if="${currentUser!=null && currentUser.id.equals(comment.getAuthor().getId())}" class="btn btn-dark" style="margin-top: -8px;"
+											th:href="@{'/user/formUpdateComment/'+*{id}+'/'+${comment.id}}">Modifica</a>
+							<a sec:authorize="hasAuthority('admin')" class="btn btn-danger" style="margin-top: -8px;"
+											th:href="@{'/admin/deleteComment/'+${comment.id}+'/'+*{id}}">Cancella</a>				
 							<p th:text="${comment.text}"></p>
 						</li>
 					</ul>

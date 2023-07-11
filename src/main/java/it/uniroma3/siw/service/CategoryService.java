@@ -13,7 +13,8 @@ import jakarta.transaction.Transactional;
 @Service
 public class CategoryService {
 
-	@Autowired CategoryRepository categoryRepository; 
+	@Autowired 
+	private CategoryRepository categoryRepository; 
 	
 	
 	@Transactional

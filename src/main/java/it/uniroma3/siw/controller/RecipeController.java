@@ -1,6 +1,10 @@
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,8 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.service.CategoryService;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.validation.RecipeValidator;
@@ -29,7 +35,9 @@ public class RecipeController {
 	@Autowired
 	private CategoryService categoryService; 
 	@Autowired
-	private HttpSession httpSession; 
+	private HttpSession httpSession;
+	@Autowired
+	private CredentialsService credentialsService; 
 	
 	@GetMapping(value="/recipes")
 	public String getAllRecipes(Model model) {
@@ -51,6 +59,12 @@ public class RecipeController {
 	@GetMapping("/recipe/{id}")
 	public String recipe(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("recipe", this.recipeService.getRecipe(id));
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken)
+			return "all/recipe.html";
+		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		model.addAttribute("currentUser", credentials.getUser());
 		return "all/recipe.html";
 	}
 	

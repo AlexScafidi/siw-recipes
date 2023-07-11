@@ -58,3 +58,11 @@ body {
 	background-color: rgb(152, 251, 152);
 	border-color: rgb(7, 214, 7);
 }
+
+.alertErrore {
+	border-color: transparent;
+}
+
+.btn-close:hover {
+	background-color: rgb(164, 0, 0, 0.5);
+}
