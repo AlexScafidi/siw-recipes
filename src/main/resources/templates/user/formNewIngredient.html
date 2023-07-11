@@ -18,8 +18,13 @@
         <div class="col-md-12">
 			<form th:action="@{'/user/formNewIngredient'}" method="POST" th:object="${ingredient}">
                 <h1>Inserisci un ingrediente</h1>
+                <div th:if="${#fields.hasGlobalErrors()}" class="alertErrore mx-auto alert bg-danger alert-dismissible fade show">
+    				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    				<strong><p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p></strong>
+  				</div>
                 <fieldset>
                     <legend><span class="number">1</span> Nome ingrediente</legend>
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
                     <input type="text" placeholder="Nome" th:field="*{name}">
                 </fieldset>
                 
