@@ -30,7 +30,7 @@
                     <div class="col my-3" th:each="ing : ${ingredients}">
                         <div class="card border-hover-primary hover-scale">
                             <div class="card-body">
-                                <img class="mb-2" src="/" />
+                                <img class="mb-2" th:src="${ing.picture!=null ? ing.picture.path : '/images/NoImage.png'}" style="max-height:100%; max-width:100%;"/>
                                 <h5 class="font-weight-bold mb-3" th:text="${ing.name}"></h5>
                                 <a class="btn btn-success d-block mx-auto w-50" th:href="@{'/admin/updateIngredient/'+${ing.id}}" sec:authorize="hasAuthority('admin')">Modifica</a>
                             </div>

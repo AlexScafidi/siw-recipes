@@ -16,7 +16,7 @@
 	<header th:insert="~{/fragments/fragments.html :: header}"></header>
     <div class="row">
         <div class="col-md-12">
-			<form th:action="@{'/admin/updateIngredient/'+${ingredient.id}}" method="POST" th:object="${ingredient}">
+			<form th:action="@{'/admin/updateIngredient/'+${ingredient.id}}" method="POST" th:object="${ingredient}" enctype="multipart/form-data">
                 <h1>Modifica l'ingrediente</h1>
                 <fieldset>
                     <legend><span class="number">1</span> Nome ingrediente</legend>
@@ -25,6 +25,7 @@
                 
                 <fieldset>
                     <legend><span class="number">2</span> Sostituisci Immagine</legend>
+                    <input type="file" name="file" accept="image/png, image/jpeg" />
                 </fieldset>
 
                 <button class="mt-3 formButton" type="submit">Conferma</button>

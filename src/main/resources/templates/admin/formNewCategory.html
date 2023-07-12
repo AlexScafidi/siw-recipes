@@ -16,7 +16,7 @@
 	<header th:insert="~{/fragments/fragments.html :: header}"></header>
     <div class="row">
         <div class="col-md-12">
-			<form th:action="@{'/admin/formNewCategory'}" method="POST" th:object="${category}">
+			<form th:action="@{'/admin/formNewCategory'}" method="POST" th:object="${category}" enctype="multipart/form-data">
                 <h1>Inserisci una nuova categoria</h1>
                 <div th:if="${#fields.hasGlobalErrors()}" class="alertErrore mx-auto alert bg-danger alert-dismissible fade show">
     				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -36,6 +36,7 @@
                 
                 <fieldset>
                     <legend><span class="number">3</span> Carica Immagine</legend>
+                    <input type="file" name="file" accept="image/png, image/jpeg" />
                 </fieldset>
 
                 <button class="mt-3 formButton" type="submit">Conferma</button>

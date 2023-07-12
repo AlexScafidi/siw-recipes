@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Category;
+import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.RecipeRepository;
@@ -16,9 +18,11 @@ import jakarta.transaction.Transactional;
 @Service
 public class RecipeService {
 
-	@Autowired RecipeRepository recipeRepository; 
-	@Autowired UserService userService; 
-	@Autowired CredentialsService credentialsService;
+	@Autowired private RecipeRepository recipeRepository; 
+	@Autowired private UserService userService; 
+	@Autowired private CredentialsService credentialsService;
+	@Autowired private FileStorageService fileStorageService;
+	@Autowired private ImageService imageService;
 	
 	@Transactional
 	public Recipe newRecipe(Recipe recipe) {
@@ -67,6 +71,21 @@ public class RecipeService {
 
 	public Recipe getRecipe(Long id) {
 		return this.recipeRepository.findById(id).get();
+	}
+	
+	@Transactional
+	public void updatePicture(Recipe rec, MultipartFile file) {
+		if(file.getSize() != 0) {
+			Image oldPic = rec.getPicture();
+			if(oldPic != null) {
+				String filename = oldPic.getFileName();
+				this.fileStorageService.delete(filename);
+				this.imageService.delete(oldPic.getId());
+			}
+			Image newPic = this.fileStorageService.createImage(file);
+			rec.setPicture(newPic);
+			this.imageService.save(newPic);
+		}
 	}
 	
 }

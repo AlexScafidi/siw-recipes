@@ -19,8 +19,8 @@
     </div>
 
     <div class="recipe-card" style="background-color: white;" th:object="${recipe}">
-        <div style="background:url(https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR-Rhz3FGsTJJAI1Migur-aQoQ0TLCYZcH6kDPklr2qWlVPzUi8) 
-  											no-repeat 50% 50%; background-size:cover; height: 600px;"></div>
+        <div th:style="'background:url(' + ${recipe.picture!=null ? recipe.picture.path : '/images/NoImage.png'} + ') 
+  											no-repeat 50% 50%; background-size:cover; height: 600px;'"></div>
         <div class="recipe-card__body">
             <h1 class="recipe-card__heading text-center mb-3" th:text="*{title}"></h1>
             <h2 class="recipe-card__subhead" th:text="*{presentationText}"></h2>
