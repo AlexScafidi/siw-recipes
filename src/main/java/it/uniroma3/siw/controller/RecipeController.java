@@ -23,7 +23,6 @@ import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.service.CategoryService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.FileStorageService;
-import it.uniroma3.siw.service.ImageService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.validation.RecipeValidator;
@@ -43,8 +42,6 @@ public class RecipeController {
 	private CategoryService categoryService;
 	@Autowired
 	private CredentialsService credentialsService;
-	@Autowired
-	private ImageService imageService;
 	@Autowired
 	private FileStorageService storageService; 
 	
