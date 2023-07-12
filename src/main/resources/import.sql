@@ -12,11 +12,11 @@ insert into category (id, name, description) values(4, 'Contorni', 'Descrizione 
 insert into category (id, name, description) values(5, 'Dolci', 'Descrizione dolci');
 
 
-insert into ingredient_quantity (id, unit_ofmeasure, quantity, ingredient_id) values(1, 'g', 1, 1);
-insert into ingredient_quantity (id, unit_ofmeasure, quantity, ingredient_id) values(2, 'g', 1, 2);
-insert into ingredient_quantity (id, unit_ofmeasure, quantity, ingredient_id) values(3, 'g', 1, 3);
-insert into ingredient_quantity (id, unit_ofmeasure, quantity, ingredient_id) values(4, 'g', 1, 4);
-insert into ingredient_quantity (id, unit_ofmeasure, quantity, ingredient_id) values(5, 'g', 1, 5);
+insert into ingredient_quantity (id, unit_of_measure, quantity, ingredient_id) values(1, 'g', 1, 1);
+insert into ingredient_quantity (id, unit_of_measure, quantity, ingredient_id) values(2, 'g', 1, 2);
+insert into ingredient_quantity (id, unit_of_measure, quantity, ingredient_id) values(3, 'g', 1, 3);
+insert into ingredient_quantity (id, unit_of_measure, quantity, ingredient_id) values(4, 'g', 1, 4);
+insert into ingredient_quantity (id, unit_of_measure, quantity, ingredient_id) values(5, 'g', 1, 5);
 
 
 insert into recipe (id, is_new, preparation_text, presentation_text, title, author_id, category_id) values(1, true, 'testo di preparazione ricetta', 'testo di presentazione ricetta', 'Titolo ricetta 1', null, 1);
