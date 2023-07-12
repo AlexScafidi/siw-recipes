@@ -12,7 +12,7 @@ Scenario principale di successo:
 4. Il sistema mostra la pagine per l'inserimento di ingredienti per la ricetta
 5. L'utente sceglie un ingrediente
 6. Il sistema mostra la pagina per la scelta della quantità ed unità di misura per quell'ingrediente
-7. L'utente sceglie quantità ed unità di misura
+7. L'utente sceglie quantità ed unità di misura<br>
 Si ripetono i passi 5-7 finché l'utente non conferma e termina l'inserimento
 8. Il sistema registra la ricetta e mostra la pagina con la nuova ricetta
 
