@@ -22,22 +22,25 @@ import jakarta.validation.Valid;
 @Service
 public class RecipeService {
 
+	@Autowired UserService userService; 
+	@Autowired CategoryService categoryService; 
 	@Autowired private RecipeRepository recipeRepository; 
 	@Autowired private UserService userService; 
 	@Autowired private CredentialsService credentialsService;
 	@Autowired private FileStorageService fileStorageService;
 	@Autowired private ImageService imageService;
+
   
   @Transactional
  	public Recipe getRecipe(Long id) {
 		return this.recipeRepository.findById(id).get();
   }
 	
-	@Transactional
-	public Recipe newRecipe(Recipe recipe) {
-		//il validatore controlla
-		return this.recipeRepository.save(recipe); 
-	}
+//	@Transactional
+//	public Recipe newRecipe(Recipe recipe) {
+//		//il validatore controlla
+//		return this.recipeRepository.save(recipe); 
+//	}
 	
 	@Transactional
 	public Recipe saveRecipe(Recipe recipe) {
@@ -59,15 +62,17 @@ public class RecipeService {
 		return recipes; 
 	}
 
-	public Recipe createNewRecipe(Recipe recipe, UserDetails userDetails) {
+	public Recipe newRecipe(Recipe recipe, UserDetails userDetails) {
 		//il controllo lo lascio alla validazione...gia fatta
 		User user = (this.credentialsService.getCredentials(userDetails.getUsername())).getUser(); 
 		if(user == null || recipe == null) return null; 
 		//altrimenti
 		user.getRecipes().add(recipe);
 		recipe.setAuthor(user);
+		recipe.getCategory().getRicette().add(recipe);
 		//cascading
-		this.userService.save(user); 
+		this.userService.save(user);
+		this.categoryService.saveCategory(recipe.getCategory()); 
 		return this.recipeRepository.save(recipe); 
 	}
 	

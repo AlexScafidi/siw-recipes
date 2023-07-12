@@ -51,7 +51,7 @@ public class User {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime registrationDate;
 	
-	@OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
 	private List<Recipe> recipes;
 
 	

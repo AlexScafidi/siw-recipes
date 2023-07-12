@@ -32,6 +32,7 @@
                   <select style="margin-left: 14%;" name="categorie" th:field="*{category}">
 					  <option th:each="cat : ${categories}" th:value="${cat.id}"
 							th:title="${cat.name}" th:text="${cat.name}"></option>
+
 				  </select>
             </fieldset>	
 			<!-- titolo -->
@@ -59,6 +60,7 @@
             </fieldset>
 			<!-- conferma -->
 			<button class="mt-3 formButton" type="submit">Conferma</button>
+
 		</form>
 
 	</div>
