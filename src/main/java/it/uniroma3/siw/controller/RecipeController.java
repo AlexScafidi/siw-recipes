@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Credentials;
@@ -25,7 +24,6 @@ import it.uniroma3.siw.service.CategoryService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.FileStorageService;
 import it.uniroma3.siw.service.ImageService;
-import it.uniroma3.siw.service.IngredientQuantityService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.validation.RecipeValidator;
@@ -43,8 +41,6 @@ public class RecipeController {
 	private IngredientService ingredientService; 
 	@Autowired
 	private CategoryService categoryService;
-	@Autowired
-	private IngredientQuantityService ingredientQuantityService;
 	@Autowired
 	private CredentialsService credentialsService;
 	@Autowired

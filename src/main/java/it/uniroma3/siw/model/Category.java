@@ -33,7 +33,7 @@ public class Category {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Image picture;
 	
-	@OneToMany(mappedBy = "category",fetch = FetchType.EAGER,  cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,})
+	@OneToMany(mappedBy = "category",fetch = FetchType.EAGER,  cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private Set<Recipe> recipes;
 	
 	public Category() {

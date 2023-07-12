@@ -70,6 +70,7 @@ public class RecipeService {
 		recipe.setAuthor(user);
 		recipe.getCategory().getRicette().add(recipe);
 		//cascading
+		this.saveRecipe(recipe);
 		this.userService.save(user);
 		this.categoryService.saveCategory(recipe.getCategory()); 
 		return recipe;
