@@ -32,14 +32,14 @@ public class CommentController {
 	@Autowired
 	private CredentialsService credentialsService;
 	
-	@GetMapping("/user/formNewComment/{recipeId}")
+	@GetMapping(value="/user/formNewComment/{recipeId}")
 	public String formNewComment(@PathVariable("recipeId") Long recipeId, Model model) {
 		model.addAttribute("recipeId", recipeId);
 		model.addAttribute("comment", new Comment());
 		return "user/formNewComment.html";
 	}
 	
-	@PostMapping("/user/formNewComment/{recipeId}")
+	@PostMapping(value="/user/formNewComment/{recipeId}")
 	public String newComment (@PathVariable("recipeId") Long recipeId, @Valid @ModelAttribute("comment") Comment comm, BindingResult bindRes, Model model) {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
@@ -58,21 +58,21 @@ public class CommentController {
 		return "user/formNewComment.html";
 	}
 	
-	@GetMapping("/admin/deleteComment/{idComm}/{idRecipe}")
+	@GetMapping(value="/admin/deleteComment/{idComm}/{idRecipe}")
 	public String deleteComment(@PathVariable("idComm")Long idComm, @PathVariable("idRecipe")Long idRecipe, Model model) {
 		this.commentService.deleteComment(idComm);
 		model.addAttribute("recipe", this.recService.getRecipe(idRecipe));
 		return "all/recipe.html";
 	}
 	
-	@GetMapping("/user/formUpdateComment/{recipeId}/{commentId}")
+	@GetMapping(value="/user/formUpdateComment/{recipeId}/{commentId}")
 	public String formUpdateComment(@PathVariable("recipeId")Long recipeId, @PathVariable("commentId")Long commId, Model model) {
 		model.addAttribute("recipeId", recipeId);
 		model.addAttribute("comment", this.commentService.getComment(commId));
 		return "user/formUpdateComment.html";
 	}
 	
-	@PostMapping("/user/formUpdateComment/{recipeId}/{commentId}")
+	@PostMapping(value="/user/formUpdateComment/{recipeId}/{commentId}")
 	public String updateComment(@PathVariable("recipeId")Long recipeId, @PathVariable("commentId")Long commId, 
 			@ModelAttribute("comment")Comment comm, Model model) {
 		Comment old = this.commentService.getComment(commId);

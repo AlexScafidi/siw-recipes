@@ -62,6 +62,7 @@ public class IngredientService {
 		List<Ingredient> ingredients = this.getAllIngredients(); 
 		ingredients.removeAll(recipe.getIngredients()); 
 		return ingredients; 
+	}
 
 	public Ingredient getIngredient(Long id) {
 		return this.ingredientRepository.findById(id).get();
