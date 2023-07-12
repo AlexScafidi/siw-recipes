@@ -42,7 +42,7 @@
             <div class="tab-content">
                 <div id="ingredients" class="container tab-pane active">
                     <ul class="recipe-card__ingredients" th:each="quantityIng : *{quantityIngredients}">
-                        <li th:text="${quantityIng.quantity+' '+quantityIng.UnitOfmeasure+' di '+UnitOfmeasure.ingredient.name}"></li>
+                        <li th:text="${quantityIng.quantity+' '+quantityIng.unitOfMeasure+' di '+quantityIng.ingredient.name}"></li>
                     </ul>
                 </div>
 
