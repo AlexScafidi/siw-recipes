@@ -1,38 +1,62 @@
 # Ricette
 progetto personale<br>
 <br> 
-CASO D'USO UC1: <br>
-Attore primario: <br>
-Pre-condizioni: <br>
-Post-condizioni: <br>
+CASO D'USO UC1: Inserimento Ricetta <br>
+Attore primario: Utente Registrato <br>
+Pre-condizioni: L'utente è autenticato <br>
+Post-condizioni: La ricetta viene registrata, le quantità di ingredienti vengono registrate <br>
 Scenario principale di successo:
+1. L'utente inizia l'inserimento di una nuova ricetta
+2. Il sistema mostra la pagina per l'inserimento di una ricetta
+3. L'utente inserisce titolo, presentazione, preparazione e categoria della ricetta
+4. Il sistema mostra la pagine per l'inserimento di ingredienti per la ricetta
+5. L'utente sceglie un ingrediente
+6. Il sistema mostra la pagina per la scelta della quantità ed unità di misura per quell'ingrediente
+7. L'utente sceglie quantità ed unità di misura
+Si ripetono i passi 5-7 finché l'utente non conferma e termina l'inserimento
+8. Il sistema registra la ricetta e mostra la pagina con la nuova ricetta
 
 <br>
 <br>
 <br>
-CASO D'USO UC2: <br>
-Attore primario: <br>
-Pre-condizioni: <br>
-Post-condizioni: <br>
+CASO D'USO UC2: Modifica commento <br>
+Attore primario: Utente Registrato<br>
+Pre-condizioni: L'utente è autenticato<br>
+Post-condizioni: Il commento scritto dall'utente per una certa ricetta viene aggiornato <br>
 Scenario principale di successo:
+1. L'utente inizia la modifica di un commento per una ricetta
+2. Il sistema mostra la pagine di modifica del commento
+3. L'utente inserisce il titolo, il testo ed il voto del commento per la ricetta
+4. Il sistema mostra la pagina della ricetta con il commento aggiornato
+
 
 <br>
 <br>
 <br>
-CASO D'USO UC3: <br>
-Attore primario: <br>
-Pre-condizioni: <br>
-Post-condizioni: <br>
+CASO D'USO UC3: Elenco nuove ricette <br>
+Attore primario: Utente non registrato<br>
+Pre-condizioni: Nessuna<br>
+Post-condizioni: Nessuna<br>
 Scenario principale di successo:
+1. L'utente accede alla homepage del site di ricette
+2. Il sistema mostra le opzioni disponibili per l'utente non registrato
+3. L'utente consulta l'elenco di nuove ricette
+4. Il sistema mostra la pagina con la list delle nuove ricette
 
 <br>
 <br>
 <br>
-CASO D'USO UC4: <br>
-Attore primario: <br>
-Pre-condizioni: <br>
-Post-condizioni: <br>
+CASO D'USO UC4: Elento ricette per categoria<br>
+Attore primario: Utente non registrato<br>
+Pre-condizioni: Nessuna<br>
+Post-condizioni: Nessuna<br>
 Scenario principale di successo:
+1. L'utente accede alla homepage del site di ricette
+2. Il sistema mostra le opzioni disponibili per l'utente non registrato
+3. L'utente accede alla lista di categorie ricette
+4. Il sistema mostra la pagina con tutte le categoria
+5. L'utente consulta la lista di ricette che appartengono ad una categoria scelta
+6. Il sistema mostra la pagina con le ricette appartenenti alla categoria scelta
 
 <br>
 <br>
