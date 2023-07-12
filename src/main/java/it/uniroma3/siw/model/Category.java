@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -27,13 +28,24 @@ public class Category {
 	
 	@Column(nullable = false)
 	@NotBlank
-	private String description; 
+	private String description;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Image picture;
 	
 	@OneToMany(mappedBy = "category",fetch = FetchType.EAGER,  cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH,})
 	private Set<Recipe> recipes;
 	
 	public Category() {
 		this.recipes = new HashSet<>();
+	}
+
+	public Image getPicture() {
+		return picture;
+	}
+
+	public void setPicture(Image picture) {
+		this.picture = picture;
 	}
 
 	public Long getId() {

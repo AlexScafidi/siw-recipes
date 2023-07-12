@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -39,6 +40,8 @@ public class Recipe {
 	private User author; 
 	@ManyToOne
 	private Category category; 
+	@OneToOne(cascade = CascadeType.ALL)
+	private Image picture;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<IngredientQuantity> quantityIngredients; 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -49,6 +52,14 @@ public class Recipe {
 		this.isNew = true; 
 		this.comments = new LinkedList<>(); 
 		this.quantityIngredients = new HashSet<>(); 
+	}
+
+	public Image getPicture() {
+		return picture;
+	}
+
+	public void setPicture(Image picture) {
+		this.picture = picture;
 	}
 
 	public Long getId() {

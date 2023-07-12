@@ -14,12 +14,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Ingredient;
 import it.uniroma3.siw.model.IngredientQuantity;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.service.CategoryService;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.FileStorageService;
+import it.uniroma3.siw.service.ImageService;
+import it.uniroma3.siw.service.IngredientQuantityService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.validation.RecipeValidator;
@@ -38,7 +44,13 @@ public class RecipeController {
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
-	private CredentialsService credentialsService; 
+	private IngredientQuantityService ingredientQuantityService;
+	@Autowired
+	private CredentialsService credentialsService;
+	@Autowired
+	private ImageService imageService;
+	@Autowired
+	private FileStorageService storageService; 
 	
 	@GetMapping(value="/recipes")
 	public String getAllRecipes(Model model) {
@@ -93,12 +105,18 @@ public class RecipeController {
 	}
 	
 	@PostMapping(value="/user/ingredientsToAdd")
-	public String showAllIngredientToAdd(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model, HttpSession httpSession) {
+	public String showAllIngredientToAdd(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, 
+			Model model, HttpSession httpSession, @RequestParam("file") MultipartFile file) {
 		this.recipeValidator.validate(recipe,recipeBindingResult); 
 		if(recipeBindingResult.hasErrors()) {
 			model.addAttribute("recipe", recipe); 
 			model.addAttribute("categories", this.categoryService.getAllCategories()); 
 			return "user/formNewRecipe.html"; 
+		}
+		if(file.getSize() != 0) {
+			Image image = this.storageService.createImage(file);
+			recipe.setPicture(image);
+			this.imageService.save(image);
 		}
 		httpSession.setAttribute("recipe", recipe); 
 		model.addAttribute("recipe",recipe); 

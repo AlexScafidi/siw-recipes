@@ -16,7 +16,7 @@
 	<header th:insert="~{/fragments/fragments.html :: header}"></header>
     <div class="row">
         <div class="col-md-12">
-			<form th:action="@{'/admin/updateCategory/'+${category.id}}" method="POST" th:object="${category}">
+			<form th:action="@{'/admin/updateCategory/'+${category.id}}" method="POST" th:object="${category}" enctype="multipart/form-data">
                 <h1>Aggiorna la categoria</h1>
                 <fieldset>
                     <legend><span class="number">1</span> Nome categoria</legend>
@@ -30,6 +30,7 @@
                 
                 <fieldset>
                     <legend><span class="number">3</span> Sostituisci Immagine</legend>
+                    <input type="file" name="file" accept="image/png, image/jpeg" />
                 </fieldset>
 
                 <button class="mt-3 formButton" type="submit">Conferma</button>

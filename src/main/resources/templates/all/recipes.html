@@ -29,7 +29,7 @@
                 <div class="ricetta col-lg-3 col-md-6" th:each="rep : ${recipes}">
                     <div class="team-item">
                         <div class="team-img">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="team Image">
+                            <img th:src="${rep.picture!=null ? rep.picture.path : '/images/NoImage.png'}" style="max-height:100%; max-width:100%;" alt="team Image">
                             <div class="normal-text">
                                 <h4 class="team-name" th:text="${rep.title}"></h4>
                                 <span class="subtitle" th:text="${rep.category.name}"></span>

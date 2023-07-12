@@ -19,48 +19,47 @@
 
 	<div>
 		<form th:action="@{/user/ingredientsToAdd}" method="post"
-			th:object="${recipe}">
-			<fieldset>
-			<legend>Categoria</legend>
-				<!-- categoria -->
-				<div>
-					<select th:field="*{category}">
-						<option th:each="cat : ${categories}" th:value="${cat}"
+			th:object="${recipe}" enctype="multipart/form-data">
+			<h1>Aggiungi una ricetta</h1>
+			<div th:if="${#fields.hasGlobalErrors()}" class="alertErrore mx-auto alert bg-danger alert-dismissible fade show">
+    			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    			<strong><p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p></strong>
+  			</div>
+  			<!-- categoria -->
+  			<fieldset>
+				  <legend><span class="number">1</span> Scegli la categoria della ricetta</legend>
+                  <div style="margin-left: 14%; color: red;" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+                  <select style="margin-left: 14%;" name="categorie" th:field="*{category}">
+					  <option th:each="cat : ${categories}" th:value="${cat.id}"
 							th:title="${cat.name}" th:text="${cat.name}"></option>
-					</select>
-				</div>
-			</fieldset>
-				<!-- titolo -->
-				<fieldset>
-				<div>
-					<label for="title">Titolo:</label><br> <input type="text"
-						th:field="*{title}" placeholder="Inserire il titolo..."
-						name="title"> <span th:if="${#fields.hasErrors('title')}"
-						th:errors="*{title}"></span>
-				</div>
-				</fieldset>
-				<!-- presentazione -->
-				<div>
-					<label for="presentationText">presentazione:</label><br>
-					<textarea rows="10" cols="45" th:field="*{presentationText}"
-						placeholder="Inserire la presentazione..." name="presentationText"></textarea>
-					<span th:if="${#fields.hasErrors('presentationText')}"
-						th:errors="*{presentationText}"></span>
-				</div>
-				<!-- preparazione -->
-				<div>
-					<label for="preparationText">preparazione:</label><br>
-					<textarea rows="10" cols="45" th:field="*{preparationText}"
-						placeholder="Inserire la preparazione..." name="preparationText"></textarea>
-					<span th:if="${#fields.hasErrors('preparationText')}"
-						th:errors="*{preparationText}"></span>
-				</div>
 
-				<!-- conferma -->
-										<div>
-					<span><button class="button" type="submit">Conferma</button></span>
-				</div>
-
+				  </select>
+            </fieldset>	
+			<!-- titolo -->
+			<fieldset>
+				<legend><span class="number">2</span> Titolo</legend>
+                <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></div>
+                <input type="text" placeholder="Inserire il titolo..." th:field="*{title}" name="title">
+            </fieldset>
+			<!-- presentazione -->
+			<fieldset>
+                <legend><span class="number">3</span> Presentazione ricetta</legend>
+                <div th:if="${#fields.hasErrors('presentationText')}" th:errors="*{presentationText}" style="color: red;"></div>
+                <textarea rows="10" cols="45" placeholder="Inserire la presentazione..." th:field="*{presentationText}" name="presentationText"></textarea>
+            </fieldset>
+			<!-- preparazione -->
+			<fieldset>
+                <legend><span class="number">4</span> Preparazione ricetta</legend>
+                <div th:if="${#fields.hasErrors('preparationText')}" th:errors="*{preparationText}" style="color: red;"></div>
+                <textarea rows="10" cols="45" placeholder="Inserire la preparazione..." th:field="*{preparationText}" name="preparationText"></textarea>
+            </fieldset>
+			<!-- immagine -->
+			<fieldset>
+                <legend><span class="number">5</span> Carica Immagine</legend>
+                <input type="file" name="file"  accept="image/png, image/jpeg"/>
+            </fieldset>
+			<!-- conferma -->
+			<button class="mt-3 formButton" type="submit">Conferma</button>
 
 		</form>
 

@@ -40,7 +40,9 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
                     <div class="post-type post-img">
-                        <a th:href="@{'/category/' + ${cat.id}}"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-responsive" alt="image post"></a>
+                        <a th:href="@{'/category/' + ${cat.id}}">
+							<img th:src="${cat.picture!=null ? cat.picture.path : '/images/NoImage.png'}" style="max-width: 100%; max-height: 100%;" class="img-responsive" alt="image post">
+						</a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">

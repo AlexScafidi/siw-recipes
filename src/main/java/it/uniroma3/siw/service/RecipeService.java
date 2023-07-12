@@ -7,10 +7,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Ingredient;
 import it.uniroma3.siw.model.IngredientQuantity;
 import it.uniroma3.siw.model.Category;
+import it.uniroma3.siw.model.Image;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.RecipeRepository;
@@ -20,10 +22,14 @@ import jakarta.validation.Valid;
 @Service
 public class RecipeService {
 
-	@Autowired RecipeRepository recipeRepository; 
 	@Autowired UserService userService; 
-	@Autowired CredentialsService credentialsService;
 	@Autowired CategoryService categoryService; 
+	@Autowired private RecipeRepository recipeRepository; 
+	@Autowired private UserService userService; 
+	@Autowired private CredentialsService credentialsService;
+	@Autowired private FileStorageService fileStorageService;
+	@Autowired private ImageService imageService;
+
   
   @Transactional
  	public Recipe getRecipe(Long id) {
@@ -113,7 +119,6 @@ public class RecipeService {
 	}
 
 	public Recipe deleteIngredientNoRepo(Recipe recipe, String ingredientName) {
-		// TODO Auto-generated method stub
 		Set<IngredientQuantity> ingrQ = recipe.getQuantityIngredients();
 		for(IngredientQuantity iq : ingrQ) if(iq.getIngredient().getName().equals(ingredientName)) {
 			ingrQ.remove(iq); break; 
@@ -121,6 +126,21 @@ public class RecipeService {
 		
 		return recipe; 
 
+	}
+	
+	@Transactional
+	public void updatePicture(Recipe rec, MultipartFile file) {
+		if(file.getSize() != 0) {
+			Image oldPic = rec.getPicture();
+			if(oldPic != null) {
+				String filename = oldPic.getFileName();
+				this.fileStorageService.delete(filename);
+				this.imageService.delete(oldPic.getId());
+			}
+			Image newPic = this.fileStorageService.createImage(file);
+			rec.setPicture(newPic);
+			this.imageService.save(newPic);
+		}
 	}
 	
 }
