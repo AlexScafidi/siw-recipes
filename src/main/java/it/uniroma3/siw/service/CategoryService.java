@@ -13,7 +13,8 @@ import jakarta.transaction.Transactional;
 @Service
 public class CategoryService {
 
-	@Autowired CategoryRepository categoryRepository; 
+	@Autowired 
+	private CategoryRepository categoryRepository; 
 	
 	
 	@Transactional
@@ -37,5 +38,9 @@ public class CategoryService {
 
 	public Category getCategory(Long id) {
 		return this.categoryRepository.findById(id).get();
+	}
+
+	public boolean existsByName(String name) {
+		return this.categoryRepository.existsByName(name);
 	}
 }

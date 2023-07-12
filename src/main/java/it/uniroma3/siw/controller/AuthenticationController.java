@@ -115,6 +115,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -123,6 +124,8 @@ import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.validation.CredentialsValidator;
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthenticationController {
@@ -131,6 +134,8 @@ public class AuthenticationController {
 	private CredentialsService credentialsService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CredentialsValidator credsValidator;
 
 
 	@GetMapping(value = "/registration")
@@ -141,17 +146,20 @@ public class AuthenticationController {
 	}
 
 	@PostMapping(value = "/registration")
-	public String registerUser( @ModelAttribute("user") User user,
-			 @ModelAttribute("credentials") Credentials credentials, Model model) {
+	public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult userBind, 
+			@Valid @ModelAttribute("credentials") Credentials credentials, BindingResult credsBind, Model model) {
 
-			// registro l'utente
-		    user.setRegistrationDate(LocalDateTime.now()); 
+		// registro l'utente
+		this.credsValidator.validate(credentials, credsBind);
+		if(!userBind.hasErrors() && !credsBind.hasErrors()) {
+			user.setRegistrationDate(LocalDateTime.now()); 
 			this.userService.save(user);
 			credentials.setUser(user);
 			this.credentialsService.saveCredentials(credentials);
 			model.addAttribute("user", user);
 			return "all/registrationSuccess.html";
-
+		}
+		return "all/registrationForm.html";
 	}
 
 	@GetMapping(value = "/login")
@@ -168,11 +176,11 @@ public class AuthenticationController {
 			//controllo se admin
 			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 			if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) return "redirect:/admin/index";
-	
+
 		}
 		return "all/index.html"; 
 	}
-	
+
 	@GetMapping(value="/admin/index")
 	public String adminIndex() { 
 		return "admin/indexAdmin.html";
@@ -183,12 +191,12 @@ public class AuthenticationController {
 	@GetMapping(value = "/success")
 	public String defaultAfterLogin(Model model) {
 
-//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-//		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-//			System.out.println("trueeeeee");
-//			return "admin/indexAdmin.html";
-//		}
+		//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		//		if (credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+		//			System.out.println("trueeeeee");
+		//			return "admin/indexAdmin.html";
+		//		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
 		if(auth instanceof AnonymousAuthenticationToken) return "all/index.html"; 
 		else {
@@ -197,9 +205,9 @@ public class AuthenticationController {
 			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 			System.out.println("success :" + credentials.getRole()); 
 			if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) return "redirect:/admin/index";
-		return "redirect:/index";
-	}
-		
+			return "redirect:/index";
+		}
+
 	}
 
 }

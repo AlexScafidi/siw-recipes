@@ -48,8 +48,8 @@ public class IngredientService {
 		this.ingredientRepository.deleteById(id);
 	}
 
+
 	public Ingredient GetIngredientById(Long ingredientId) {
-		// TODO Auto-generated method stub
 		return this.ingredientRepository.findById(ingredientId).orElse(null); 
 	}
 	
@@ -62,6 +62,10 @@ public class IngredientService {
 		List<Ingredient> ingredients = this.getAllIngredients(); 
 		ingredients.removeAll(recipe.getIngredients()); 
 		return ingredients; 
+
+	public Ingredient getIngredient(Long id) {
+		return this.ingredientRepository.findById(id).get();
+
 	}
 
 }

@@ -1,6 +1,10 @@
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Ingredient;
-import it.uniroma3.siw.model.IngredientQuantity;
 import it.uniroma3.siw.model.Recipe;
-import it.uniroma3.siw.service.CategoryService;
+import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.IngredientQuantity;
 import it.uniroma3.siw.service.IngredientQuantityService;
+import it.uniroma3.siw.service.CategoryService;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredientService;
 import it.uniroma3.siw.service.RecipeService;
 import it.uniroma3.siw.validation.RecipeValidator;
@@ -32,11 +38,9 @@ public class RecipeController {
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
-	private IngredientQuantityService ingredientQuantityService;
-	//@Autowired
-	//private IngredientQuantityValidator ingredientQuantityValidator; 
-	//@Autowired
-	//private HttpSession httpSession; 
+	private IngredientQuantityService ingredientQuantityService
+	@Autowired
+	private CredentialsService credentialsService; 
 	
 	@GetMapping(value="/recipes")
 	public String getAllRecipes(Model model) {
@@ -53,6 +57,18 @@ public class RecipeController {
 	public String getAllNewRecipes(Model model) {
 		model.addAttribute("newRecipes", this.recipeService.getAllNewRecipe()); 
 		return "all/newRecipes.html";
+	}
+	
+	@GetMapping("/recipe/{id}")
+	public String recipe(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("recipe", this.recipeService.getRecipe(id));
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof AnonymousAuthenticationToken)
+			return "all/recipe.html";
+		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		model.addAttribute("currentUser", credentials.getUser());
+		return "all/recipe.html";
 	}
 	
 	/**
@@ -129,5 +145,14 @@ public class RecipeController {
 		model.addAttribute("ingredientsToAdd", this.ingredientService.getAllIngredientsNotInRecipeNoRepo(recipe)); 
 		return "user/ingredientsToAdd.html"; 
 	}
+
 	
+	@GetMapping("/admin/deleteRecipe/{id}")
+	public String deleteRecipe(@PathVariable("id") Long id, Model model) {
+		this.recipeService.deleteRecipe(id);
+		model.addAttribute("recipes", this.recipeService.getAllRecipe());
+		return "all/recipes.html";
+	}
+
+
 }

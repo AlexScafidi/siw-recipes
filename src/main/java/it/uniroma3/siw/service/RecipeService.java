@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Ingredient;
 import it.uniroma3.siw.model.IngredientQuantity;
+import it.uniroma3.siw.model.Category;
 import it.uniroma3.siw.model.Recipe;
 import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.repository.RecipeRepository;
@@ -22,6 +23,10 @@ public class RecipeService {
 	@Autowired RecipeRepository recipeRepository; 
 	@Autowired UserService userService; 
 	@Autowired CredentialsService credentialsService;
+  
+  @Transactional
+ 	public Recipe getRecipe(Long id) {
+		return this.recipeRepository.findById(id).get();
 	
 	@Transactional
 	public Recipe newRecipe(Recipe recipe) {
@@ -39,7 +44,7 @@ public class RecipeService {
 	public List<Recipe> getAllRecipe() {
 		List<Recipe> recipes = new LinkedList<>(); 
 		for(Recipe rec : this.recipeRepository.findAll())  recipes.add(rec); 
-		return recipes; 
+		return recipes;
 	}
 	
 	@Transactional
@@ -63,6 +68,8 @@ public class RecipeService {
 	
 	@Transactional
 	public void deleteRecipe(Long id) {
+		Category cat = this.getRecipe(id).getCategory();
+		cat.getRicette().remove(this.getRecipe(id));
 		this.recipeRepository.deleteById(id);
 	}
 
@@ -109,6 +116,7 @@ public class RecipeService {
 		}
 		
 		return recipe; 
+
 	}
 	
 }

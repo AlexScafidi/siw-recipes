@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotNull;
 public class IngredientQuantity {
 	
 	public final static String[] misures = {"N.D","Kg","g","etti","tazze","l","dl","cl","ml","cc"}; 
- 	
+  
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -27,11 +27,13 @@ public class IngredientQuantity {
 	@NotBlank
 	private String unitOfMeasure;
 	@Column(nullable = false)
+
 	@NotNull
 	@Digits(integer=3, fraction=1)
 	@DecimalMin(value = "0.0", inclusive = false)
 	@DecimalMax(value = "1000.0", inclusive =  false)
 	private BigDecimal quantity; 
+  
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Ingredient ingredient;
 	

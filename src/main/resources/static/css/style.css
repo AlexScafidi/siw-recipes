@@ -1,5 +1,9 @@
 @charset "ISO-8859-1";
 
+* {
+	box-sizing: content-box;
+}
+
 .button{
 	
 	border-radius: 5px; 
@@ -20,8 +24,48 @@
 	color: black; 
 }
 
-body{
+body {
 	background: linear-gradient(45deg, blue, red);
-	height: 140vh; 
-	margin: 0; 
+	height: 100vh;
+	padding-top: 60px;
+	margin: 0;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.navbar-brand:hover {
+	opacity: 0.5;
+	transition: 0.2s;
+}
+
+.goBackArrow {
+	font-size: 2em;
+	margin-top: 3.5%;
+	width: 4%;
+	background: linear-gradient(45deg, blue, blueviolet);
+}
+
+@media screen and (max-width: 600px) {
+	.goBackArrow {
+		background: linear-gradient(45deg,  rgb(149, 14, 156), rgb(209, 24, 121));
+		margin-top: 13.5%;
+		width: 13%;
+	}
+}
+
+.goBackArrow:hover {
+	opacity: 0.7;
+}
+
+.alert {
+	background-color: rgb(152, 251, 152);
+	border-color: rgb(7, 214, 7);
+}
+
+.alertErrore {
+	border-color: transparent;
+}
+
+.btn-close:hover {
+	background-color: rgb(164, 0, 0, 0.5);
 }

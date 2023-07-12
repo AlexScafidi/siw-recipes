@@ -18,7 +18,7 @@ public class Ingredient {
 	
 	@Column(nullable = false, unique = true)
 	@NotBlank
-	private String name; 
+	private String name;
 	
 	public Ingredient() {}
 
@@ -33,7 +33,6 @@ public class Ingredient {
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}

@@ -26,7 +26,6 @@ public class Credentials {
 	private String username; 
 	
 	@Column(nullable = false)
-	@NotBlank
 	private String role; 
 	
 	@Column(nullable = false)
