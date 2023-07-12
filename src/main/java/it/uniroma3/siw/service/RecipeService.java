@@ -80,6 +80,8 @@ public class RecipeService {
 	public void deleteRecipe(Long id) {
 		Category cat = this.getRecipe(id).getCategory();
 		cat.getRicette().remove(this.getRecipe(id));
+		Recipe rec = this.getRecipe(id);
+		this.fileStorageService.delete(rec.getPicture().getFileName());
 		this.recipeRepository.deleteById(id);
 	}
 
