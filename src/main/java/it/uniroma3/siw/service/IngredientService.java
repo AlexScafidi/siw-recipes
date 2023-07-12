@@ -54,8 +54,25 @@ public class IngredientService {
 		this.ingredientRepository.deleteById(id);
 	}
 
+
+	public Ingredient GetIngredientById(Long ingredientId) {
+		return this.ingredientRepository.findById(ingredientId).orElse(null); 
+	}
+	
+	/**
+	 * PER L'INSERIMENTO DI UNA NUOVA RICETTA
+	 * @param recipe
+	 * @return
+	 */
+	public List<Ingredient> getAllIngredientsNotInRecipeNoRepo(Recipe recipe) {
+		List<Ingredient> ingredients = this.getAllIngredients(); 
+		ingredients.removeAll(recipe.getIngredients()); 
+		return ingredients; 
+	}
+		
 	public Ingredient getIngredient(Long id) {
 		return this.ingredientRepository.findById(id).get();
+
 	}
 	
 	@Transactional

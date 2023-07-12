@@ -1,8 +1,10 @@
 package it.uniroma3.siw.model;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Recipe {
@@ -41,7 +44,7 @@ public class Recipe {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Image picture;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<IngredientQuantity> quantityIngredients; 
+	private Set<IngredientQuantity> quantityIngredients; 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "movie_id")
 	private List<Comment> comments;
@@ -49,7 +52,7 @@ public class Recipe {
 	public Recipe() {
 		this.isNew = true; 
 		this.comments = new LinkedList<>(); 
-		this.quantityIngredients = new LinkedList<>(); 
+		this.quantityIngredients = new HashSet<>(); 
 	}
 
 	public Image getPicture() {
@@ -90,8 +93,8 @@ public class Recipe {
 		return presentationText;
 	}
 
-	public void setPresentatioText(String presentatioText) {
-		this.presentationText = presentatioText;
+	public void setPresentationText(String presentationText) {
+		this.presentationText = presentationText;
 	}
 
 	public boolean isNew() {
@@ -118,11 +121,11 @@ public class Recipe {
 		this.category = category;
 	}
 
-	public List<IngredientQuantity> getQuantityIngredients() {
-		return quantityIngredients;
+	public Set<IngredientQuantity> getQuantityIngredients() {
+		return this.quantityIngredients;
 	}
 
-	public void setQuantityIngredients(List<IngredientQuantity> quantityIngredients) {
+	public void setQuantityIngredients(Set<IngredientQuantity> quantityIngredients) {
 		this.quantityIngredients = quantityIngredients;
 	}
 
