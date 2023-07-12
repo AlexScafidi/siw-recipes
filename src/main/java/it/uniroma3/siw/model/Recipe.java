@@ -45,7 +45,7 @@ public class Recipe {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<IngredientQuantity> quantityIngredients; 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "movie_id")
+	@JoinColumn(name = "recipe_id")
 	private List<Comment> comments;
 	
 	public Recipe() {
