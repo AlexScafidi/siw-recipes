@@ -23,7 +23,7 @@ CASO D'USO UC2: Modifica commento <br>
 Attore primario: Utente Registrato<br>
 Pre-condizioni: L'utente è autenticato<br>
 Post-condizioni: Il commento scritto dall'utente per una certa ricetta viene aggiornato <br>
-Scenario principale di successo:
+Scenario principale di successo:<br>
 1. L'utente inizia la modifica di un commento per una ricetta <br>
 2. Il sistema mostra la pagine di modifica del commento <br>
 3. L'utente inserisce il titolo, il testo ed il voto del commento per la ricetta <br>
@@ -37,7 +37,7 @@ CASO D'USO UC3: Elenco nuove ricette <br>
 Attore primario: Utente non registrato<br>
 Pre-condizioni: Nessuna<br>
 Post-condizioni: Nessuna<br>
-Scenario principale di successo:
+Scenario principale di successo:<br>
 1. L'utente accede alla homepage del site di ricette <br>
 2. Il sistema mostra le opzioni disponibili per l'utente non registrato <br>
 3. L'utente consulta l'elenco di nuove ricette <br>
@@ -50,7 +50,7 @@ CASO D'USO UC4: Elento ricette per categoria<br>
 Attore primario: Utente non registrato<br>
 Pre-condizioni: Nessuna<br>
 Post-condizioni: Nessuna<br>
-Scenario principale di successo:
+Scenario principale di successo:<br>
 1. L'utente accede alla homepage del site di ricette <br>
 2. Il sistema mostra le opzioni disponibili per l'utente non registrato <br>
 3. L'utente accede alla lista di categorie ricette <br>
