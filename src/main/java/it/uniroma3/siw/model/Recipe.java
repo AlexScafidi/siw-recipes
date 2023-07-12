@@ -1,8 +1,10 @@
 package it.uniroma3.siw.model;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Recipe {
@@ -27,7 +30,7 @@ public class Recipe {
 	private String title;
 	@Column(nullable = false)
 	@NotBlank
-	private String preparetionText;
+	private String preparationText;
 	@Column(nullable = false)
 	@NotBlank
 	private String presentationText; 
@@ -37,14 +40,14 @@ public class Recipe {
 	@ManyToOne
 	private Category category; 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<IngredientQuantity> quantityIngredients; 
+	private Set<IngredientQuantity> quantityIngredients; 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Comment> comments;
 	
 	public Recipe() {
 		this.isNew = true; 
 		this.comments = new LinkedList<>(); 
-		this.quantityIngredients = new LinkedList<>(); 
+		this.quantityIngredients = new HashSet<>(); 
 	}
 
 	public Long getId() {
@@ -65,20 +68,20 @@ public class Recipe {
 	
 	
 	
-	public String getPreparetionText() {
-		return preparetionText;
+	public String getPreparationText() {
+		return preparationText;
 	}
 
-	public void setPreparetionText(String preparetionText) {
-		this.preparetionText = preparetionText;
+	public void setPreparationText(String preparationText) {
+		this.preparationText = preparationText;
 	}
 
 	public String getPresentationText() {
 		return presentationText;
 	}
 
-	public void setPresentatioText(String presentatioText) {
-		this.presentationText = presentatioText;
+	public void setPresentationText(String presentationText) {
+		this.presentationText = presentationText;
 	}
 
 	public boolean isNew() {
@@ -105,11 +108,11 @@ public class Recipe {
 		this.category = category;
 	}
 
-	public List<IngredientQuantity> getQuantityIngredients() {
-		return quantityIngredients;
+	public Set<IngredientQuantity> getQuantityIngredients() {
+		return this.quantityIngredients;
 	}
 
-	public void setQuantityIngredients(List<IngredientQuantity> quantityIngredients) {
+	public void setQuantityIngredients(Set<IngredientQuantity> quantityIngredients) {
 		this.quantityIngredients = quantityIngredients;
 	}
 

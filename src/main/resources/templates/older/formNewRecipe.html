@@ -25,27 +25,26 @@
 	</div>
 
 	<div>
-		<form th:action="@{/user/ingredientsToAdd}" method="post"
+		<form th:action="@{/user/newRecipe}" method="post"
 			th:object="${recipe}">
+						<!-- categoria -->
 			<fieldset>
-			<legend>Categoria</legend>
-				<!-- categoria -->
+	<legend>Categoria</legend>
 				<div>
 					<select th:field="*{category}">
 						<option th:each="cat : ${categories}" th:value="${cat}"
-							th:title="${cat.name}" th:text="${cat.name}"></option>
+							th:label="${cat.name}"></option>
 					</select>
+
 				</div>
 			</fieldset>
 				<!-- titolo -->
-				<fieldset>
 				<div>
 					<label for="title">Titolo:</label><br> <input type="text"
 						th:field="*{title}" placeholder="Inserire il titolo..."
 						name="title"> <span th:if="${#fields.hasErrors('title')}"
 						th:errors="*{title}"></span>
 				</div>
-				</fieldset>
 				<!-- presentazione -->
 				<div>
 					<label for="presentationText">presentazione:</label><br>
@@ -61,6 +60,11 @@
 						placeholder="Inserire la preparazione..." name="preparationText"></textarea>
 					<span th:if="${#fields.hasErrors('preparationText')}"
 						th:errors="*{preparationText}"></span>
+				</div>
+				
+				<!-- aggiungi ingredienti -->
+				<div>
+				<button fo></button>
 				</div>
 
 				<!-- conferma -->
