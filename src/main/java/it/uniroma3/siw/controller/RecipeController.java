@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.Ingredient;
 import it.uniroma3.siw.model.Recipe;
+import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.IngredientQuantity;
+import it.uniroma3.siw.service.IngredientQuantityService;
 import it.uniroma3.siw.service.CategoryService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.IngredientService;
@@ -28,14 +31,14 @@ public class RecipeController {
 	
 	@Autowired
 	private RecipeService recipeService;
+	@Autowired
+	private RecipeValidator recipeValidator;
 	@Autowired 
 	private IngredientService ingredientService; 
 	@Autowired
-	private RecipeValidator recipeValidator;
+	private CategoryService categoryService;
 	@Autowired
-	private CategoryService categoryService; 
-	@Autowired
-	private HttpSession httpSession;
+	private IngredientQuantityService ingredientQuantityService
 	@Autowired
 	private CredentialsService credentialsService; 
 	
@@ -75,75 +78,74 @@ public class RecipeController {
 	 */
 	@GetMapping(value="/user/formNewRecipe")
 	public String showFormNewRecipe(Model model) {
-		model.addAttribute("recipe", new Recipe()); 
+		Recipe recipe = new Recipe();
+		model.addAttribute("recipe", recipe); 
 		model.addAttribute("categories", this.categoryService.getAllCategories()); 
+		
 		return "user/formNewRecipe.html"; 
 	}
 	
 	@PostMapping(value="/user/newRecipe")
-	public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model) {
-
-		this.recipeValidator.validate(recipe,recipeBindingResult); 
-		if(recipeBindingResult.hasErrors()) return "user/formNewRecipe.html"; 
+	public String newRecipe(Model model, HttpSession httpSession) {
 		
 		//altrimenti
-		return "";
+		return "all/recipe.html";
 	}
-	
-	@GetMapping(value="/user/returnFormNewRecipe")
-	public String returnToFormNewRecipe(@ModelAttribute("recipe") Recipe recipe,Model model) {
-		Recipe recipeNew = (Recipe) this.httpSession.getAttribute("recipe");
-		model.addAttribute("recipe",recipeNew);
-		return "user/formNewRecipe.html";
-	}
-	
-//	/**
-//	 * GET : controllo intermedio dei campi, se tutto ok -> redirezione altrimenti ritorno alla form
-//	 * @param recipe
-//	 * @param recipeBindingResult
-//	 * @param model
-//	 * @return
-//	 */
-//	@GetMapping(value="/user/checkFieldsNewRecipe")
-//	public String checkFieldsRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model) {
-//
-//		this.recipeValidator.validate(recipe,recipeBindingResult); 
-//		if(recipeBindingResult.hasErrors()) return "user/formNewRecipe.html"; 
-//		
-//		//altrimenti
-//		return "redirect:/user/listIngredientToAdd";
-//	}
 	
 	@PostMapping(value="/user/ingredientsToAdd")
-	public String showAllIngredientToAdd(@ModelAttribute("recipe") Recipe recipe, Model model) {
-		if(recipe == null) return "all/newRecipeError.html"; 
-		System.out.println(recipe.getTitle());
-		model.addAttribute("recipe", recipe); 
-		model.addAttribute("ingredients", recipe.getIngredients()); 
-		model.addAttribute("ingredientsToAdd", this.ingredientService.getAllIngredientsNotInRecipe(recipe)); 
+	public String showAllIngredientToAdd(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult recipeBindingResult, Model model, HttpSession httpSession) {
+		this.recipeValidator.validate(recipe,recipeBindingResult); 
+		if(recipeBindingResult.hasErrors()) {
+			model.addAttribute("recipe", recipe); 
+	//		model.addAttribute("categories", this.categoryService.getAllCategories()); 
+			return "user/formNewRecipe.html"; 
+		}
+		httpSession.setAttribute("recipe", recipe); 
+		model.addAttribute("recipe",recipe); 
+		model.addAttribute("ingredientsQuantity", recipe.getQuantityIngredients()); 
+		model.addAttribute("ingredientsToAdd", this.ingredientService.getAllIngredientsNotInRecipeNoRepo(recipe)); 
 		return "user/ingredientsToAdd.html"; 
 	}
-//	/**
-//	 * DA COMPLETARE/MIGLIORARE
-//	 * @param recipe
-//	 * @param userDetails
-//	 * @param RecipeBindingResult
-//	 * @param model
-//	 * @return
-//	 */
-//	@PostMapping(value="/user/formNewRecipe")
-//	public String newRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, 
-//			@RequestParam("userDetails") UserDetails userDetails, 
-//			BindingResult RecipeBindingResult, Model model) {
-//		
-//		//controllo di validazione
-//		if(RecipeBindingResult.hasErrors()) {return "user/formNewRecipe.html";}
-//		
-//		//altrimenti salvo,associo all'utente e la mostro la ricetta nella sua pagina
-//		
-//		model.addAttribute("recipe", this.recipeService.createNewRecipe(recipe,userDetails)); 
-//		return "all/recipe.html"; 
-//	}
+	
+	@GetMapping(value="/user/addIngredientWithQuantity/{ingredientId}")
+	public String showFormAddIngredient(@PathVariable("ingredientId") Long ingredientId, Model model, HttpSession httpSession) {
+		Ingredient ingredient = this.ingredientService.GetIngredientById(ingredientId); 
+		if(ingredient == null) return "paginaError.html"; 
+		model.addAttribute("recipe",(Recipe)httpSession.getAttribute("recipe"));
+		model.addAttribute("ingredient",ingredient); 
+		model.addAttribute("ingredientQuantity",new IngredientQuantity());
+		model.addAttribute("misures",IngredientQuantity.misures);
+		return "user/formAddIngredientWithQuantity.html"; 
+	}
+	
+	@PostMapping(value="/user/addIngredientWithQuantity/{ingredientId}")
+	public String addIngredientQuantity(@Valid @ModelAttribute("ingredientQuantity") IngredientQuantity ingredientQuantity, BindingResult IngredientQuantityBindingResult, @PathVariable("ingredientId")Long ingredientId, Model model, HttpSession httpSession) {
+		Ingredient ingredient = this.ingredientService.GetIngredientById(ingredientId); 
+		if(ingredientQuantity == null || ingredient == null) return "paginaError.html";
+		Recipe recipe = (Recipe)httpSession.getAttribute("recipe"); 
+
+		if(IngredientQuantityBindingResult.hasErrors()) {
+			model.addAttribute("ingredient",ingredient); 
+			model.addAttribute("recipe",recipe); 
+			model.addAttribute("misures",IngredientQuantity.misures);
+			return "user/formAddIngredientWithQuantity.html";}
+		//se tutto bene 
+		model.addAttribute("recipe",this.recipeService.addIngredient(recipe,ingredient,ingredientQuantity)); 
+		model.addAttribute("ingredientsQuantity", recipe.getQuantityIngredients()); 
+		model.addAttribute("ingredientsToAdd", this.ingredientService.getAllIngredientsNotInRecipeNoRepo(recipe)); 
+		return "user/ingredientsToAdd.html"; 
+	}
+	
+	@GetMapping(value="/user/removeIngredientWithQuantity/{ingredientName}")
+	public String deleteIngredientQuantity(@PathVariable("ingredientName") String ingredientName, Model model, HttpSession httpSession) {
+		if(ingredientName == null) return "paginaError.html"; 
+		Recipe recipe = (Recipe)httpSession.getAttribute("recipe"); 
+		model.addAttribute("recipe",this.recipeService.deleteIngredientNoRepo(recipe,ingredientName)); 
+		model.addAttribute("ingredientsQuantity", recipe.getQuantityIngredients()); 
+		model.addAttribute("ingredientsToAdd", this.ingredientService.getAllIngredientsNotInRecipeNoRepo(recipe)); 
+		return "user/ingredientsToAdd.html"; 
+	}
+
 	
 	@GetMapping("/admin/deleteRecipe/{id}")
 	public String deleteRecipe(@PathVariable("id") Long id, Model model) {
@@ -151,5 +153,6 @@ public class RecipeController {
 		model.addAttribute("recipes", this.recipeService.getAllRecipe());
 		return "all/recipes.html";
 	}
+
 
 }

@@ -5,8 +5,10 @@
 }
 
 .button{
+	
 	border-radius: 5px; 
 	border: none; 
+	background-color: #E2822D;
 	color: black; 
 	padding: 5px; 
 	text-align: center; 
@@ -17,7 +19,8 @@
 }
 
 .button:hover{
-	background-color: orange;  
+	background: linear-gradient(45deg, fuchsia,orange,red);
+
 	color: black; 
 }
 
