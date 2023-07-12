@@ -22,7 +22,6 @@ import jakarta.validation.Valid;
 @Service
 public class RecipeService {
 
-	@Autowired UserService userService; 
 	@Autowired CategoryService categoryService; 
 	@Autowired private RecipeRepository recipeRepository; 
 	@Autowired private UserService userService; 
@@ -73,7 +72,7 @@ public class RecipeService {
 		//cascading
 		this.userService.save(user);
 		this.categoryService.saveCategory(recipe.getCategory()); 
-		return this.recipeRepository.save(recipe); 
+		return recipe;
 	}
 	
 	@Transactional

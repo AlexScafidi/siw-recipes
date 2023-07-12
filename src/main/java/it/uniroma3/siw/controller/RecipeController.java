@@ -96,7 +96,7 @@ public class RecipeController {
 	}
 	
 	@PostMapping(value="/user/newRecipe")
-	public String newRecipe(Model model, HttpSession httpSession, @RequestParam("userDateils") UserDetails userDetails) {
+	public String newRecipe(Model model, HttpSession httpSession, @ModelAttribute("userDetails") UserDetails userDetails) {
 		
 		//associo la ricetta al suo autore
 		model.addAttribute("recipe",this.recipeService.newRecipe((Recipe)httpSession.getAttribute("recipe"),userDetails));
