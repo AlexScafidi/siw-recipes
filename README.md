@@ -24,10 +24,10 @@ Attore primario: Utente Registrato<br>
 Pre-condizioni: L'utente è autenticato<br>
 Post-condizioni: Il commento scritto dall'utente per una certa ricetta viene aggiornato <br>
 Scenario principale di successo:
-1. L'utente inizia la modifica di un commento per una ricetta
-2. Il sistema mostra la pagine di modifica del commento
-3. L'utente inserisce il titolo, il testo ed il voto del commento per la ricetta
-4. Il sistema mostra la pagina della ricetta con il commento aggiornato
+1. L'utente inizia la modifica di un commento per una ricetta <br>
+2. Il sistema mostra la pagine di modifica del commento <br>
+3. L'utente inserisce il titolo, il testo ed il voto del commento per la ricetta <br>
+4. Il sistema mostra la pagina della ricetta con il commento aggiornato <br>
 
 
 <br>
@@ -38,10 +38,10 @@ Attore primario: Utente non registrato<br>
 Pre-condizioni: Nessuna<br>
 Post-condizioni: Nessuna<br>
 Scenario principale di successo:
-1. L'utente accede alla homepage del site di ricette
-2. Il sistema mostra le opzioni disponibili per l'utente non registrato
-3. L'utente consulta l'elenco di nuove ricette
-4. Il sistema mostra la pagina con la list delle nuove ricette
+1. L'utente accede alla homepage del site di ricette <br>
+2. Il sistema mostra le opzioni disponibili per l'utente non registrato <br>
+3. L'utente consulta l'elenco di nuove ricette <br>
+4. Il sistema mostra la pagina con la list delle nuove ricette <br>
 
 <br>
 <br>
@@ -51,12 +51,12 @@ Attore primario: Utente non registrato<br>
 Pre-condizioni: Nessuna<br>
 Post-condizioni: Nessuna<br>
 Scenario principale di successo:
-1. L'utente accede alla homepage del site di ricette
-2. Il sistema mostra le opzioni disponibili per l'utente non registrato
-3. L'utente accede alla lista di categorie ricette
-4. Il sistema mostra la pagina con tutte le categoria
-5. L'utente consulta la lista di ricette che appartengono ad una categoria scelta
-6. Il sistema mostra la pagina con le ricette appartenenti alla categoria scelta
+1. L'utente accede alla homepage del site di ricette <br>
+2. Il sistema mostra le opzioni disponibili per l'utente non registrato <br>
+3. L'utente accede alla lista di categorie ricette <br>
+4. Il sistema mostra la pagina con tutte le categoria <br>
+5. L'utente consulta la lista di ricette che appartengono ad una categoria scelta <br>
+6. Il sistema mostra la pagina con le ricette appartenenti alla categoria scelta <br>
 
 <br>
 <br>
