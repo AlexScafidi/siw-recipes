@@ -112,7 +112,6 @@ public class RecipeController {
 		if(file.getSize() != 0) {
 			Image image = this.storageService.createImage(file);
 			recipe.setPicture(image);
-			this.imageService.save(image);
 		}
 		httpSession.setAttribute("recipe", recipe); 
 		model.addAttribute("recipe",recipe); 
