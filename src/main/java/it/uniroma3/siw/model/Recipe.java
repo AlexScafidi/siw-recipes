@@ -29,10 +29,10 @@ public class Recipe {
 	@Column(nullable = false, unique = true)
 	@NotBlank
 	private String title;
-	@Column(nullable = false)
+	@Column(nullable = false, length = 300)
 	@NotBlank
 	private String preparationText;
-	@Column(nullable = false)
+	@Column(nullable = false, length = 3000)
 	@NotBlank
 	private String presentationText; 
 	private boolean isNew; 
