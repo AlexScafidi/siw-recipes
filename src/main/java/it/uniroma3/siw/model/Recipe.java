@@ -29,7 +29,7 @@ public class Recipe {
 	@Column(nullable = false, unique = true)
 	@NotBlank
 	private String title;
-	@Column(nullable = false, length = 300)
+	@Column(nullable = false, length = 3000)
 	@NotBlank
 	private String preparationText;
 	@Column(nullable = false, length = 3000)
